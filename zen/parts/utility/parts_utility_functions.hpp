@@ -21,21 +21,15 @@ public:
 
     const std::string &
     user()
-    {
-        return _user;
-    };
+    { return _user; };
 
     const std::string &
     host()
-    {
-        return _host;
-    };
+    { return _host; };
 
     uint16_t
     port()
-    {
-        return _port;
-    };
+    { return _port; };
 
 private:
 
@@ -57,33 +51,23 @@ public:
 
     const std::string &
     operator()( size_t pos_ ) const
-    {
-        return _tokens.at( pos_ );
-    };
+    { return _tokens.at( pos_ ); };
 
     size_t
     size()
-    {
-        return _tokens.size();
-    }
+    { return _tokens.size(); }
 
     const std::string &
     key()
-    {
-        return _key;
-    }
+    { return _key; }
 
     const std::string &
     value()
-    {
-        return _value;
-    }
+    { return _value; }
 
     char
     op()
-    {
-        return _op;
-    }
+    { return _op; }
 
 private:
 

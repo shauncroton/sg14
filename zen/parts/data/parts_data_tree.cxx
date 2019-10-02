@@ -24,130 +24,141 @@ struct build_unit_test_0000
             )
         }
     )
-    {
-        // Set up test here
-    }
+    { // Set up test here}
 
-    void
-    function_test_one()
-    {
-        MATCHES( "What are we checking",
-            true,
-            true );
+        void
+        function_test_one()
+        {
+            MATCHES(
+                "What are we checking",
+                true,
+                true
+            );
 
-        DIFFERS( "What are we failing",
-            true,
-            false );
+            DIFFERS(
+                "What are we failing",
+                true,
+                false
+            );
 
-        CATCHES( "What are we catching",
-            std::logic_error( "logic error thrown" ),
-            throw std::logic_error( "logic error thrown" ));
-    }
+            CATCHES(
+                "What are we catching",
+                std::logic_error( "logic error thrown" ),
+                throw std::logic_error( "logic error thrown" ));
+        }
 
-    void
-    function_test_two()
-    {
-        MATCHES( "What are we checking",
-            true,
-            true );
+        void
+        function_test_two()
+        {
+            MATCHES(
+                "What are we checking",
+                true,
+                true
+            );
 
-        DIFFERS( "What are we failing",
-            true,
-            false );
+            DIFFERS(
+                "What are we failing",
+                true,
+                false
+            );
 
-        CATCHES( "What are we catching",
-            std::logic_error( "logic error thrown" ),
-            throw std::logic_error( "logic error thrown" ));
-    }
+            CATCHES(
+                "What are we catching",
+                std::logic_error( "logic error thrown" ),
+                throw std::logic_error( "logic error thrown" ));
+        }
 
-    ~build_unit_test_0000()
-    {
-        // Pull down test here
-    }
-};
+        ~build_unit_test_0000()
+        { // Pull down test here}};
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 struct build_unit_test_0001
-    : build_unit_test_case
-{
-    build_unit_test_0001()
-        : build_unit_test_case(
-        "testcase_one",
-        {
-            test(
-                "foo",
-                &build_unit_test_0001::function_test_one
-            ),
-            test(
-                "bar",
-                &build_unit_test_0001::function_test_two
-            )
-        }
-    )
-    {
-        // Set up test here
-    }
+                : build_unit_test_case
+            {
+                build_unit_test_0001()
+                    : build_unit_test_case(
+                    "testcase_one",
+                    {
+                        test(
+                            "foo",
+                            &build_unit_test_0001::function_test_one
+                        ),
+                        test(
+                            "bar",
+                            &build_unit_test_0001::function_test_two
+                        )
+                    }
+                )
+                { // Set up test here}
 
-    void
-    function_test_one()
-    {
-        MATCHES( "What are we checking",
-            true,
-            true );
+                    void
+                    function_test_one()
+                    {
+                        MATCHES(
+                            "What are we checking",
+                            true,
+                            true
+                        );
 
-        DIFFERS( "What are we failing",
-            true,
-            false );
+                        DIFFERS(
+                            "What are we failing",
+                            true,
+                            false
+                        );
 
-        CATCHES( "What are we catching",
-            throw std::logic_error( "logic error thrown" ),
-            std::logic_error,
-            "logic error thrown" );
-    }
+                        CATCHES(
+                            "What are we catching",
+                            throw std::logic_error( "logic error thrown" ),
+                            std::logic_error,
+                            "logic error thrown"
+                        );
+                    }
 
-    void
-    function_test_two()
-    {
-        MATCHES( "What are we checking",
-            true,
-            true );
+                    void
+                    function_test_two()
+                    {
+                        MATCHES(
+                            "What are we checking",
+                            true,
+                            true
+                        );
 
-        DIFFERS( "What are we failing",
-            true,
-            false );
+                        DIFFERS(
+                            "What are we failing",
+                            true,
+                            false
+                        );
 
-        CATCHES( "What are we catching",
-            std::logic_error( "logic error thrown" ),
-            throw std::logic_error( "logic error thrown" ));
-    }
+                        CATCHES(
+                            "What are we catching",
+                            std::logic_error( "logic error thrown" ),
+                            throw std::logic_error( "logic error thrown" ));
+                    }
 
-    ~build_unit_test_0001()
-    {
-        // Pull down test here
-    }
-};
+                    ~build_unit_test_0001()
+                    { // Pull down test here}};
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 int
-main(
-    int argc,
-    char *argv[]
-)
-{
-    build_unit_test_suite<
-        build_unit_test_one,
-        build_unit_test_two
-    > unit_test_suite;
+                        main(
+                            int argc,
+                            char *argv[]
+                        )
+                        {
+                            build_unit_test_suite<
+                                build_unit_test_one,
+                                build_unit_test_two
+                            > unit_test_suite;
 
-    return unit_test_suite.run(
-        argc,
-        argv
-    );
-};
+                            return unit_test_suite.run(
+                                argc,
+                                argv
+                            );
+                        };
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////

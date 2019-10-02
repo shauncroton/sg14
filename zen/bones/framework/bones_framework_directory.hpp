@@ -14,7 +14,8 @@
 ///
 class zen::bones_framework_directory
 {
-    using service_map_type = std::unordered_map<
+    using service_map_type =
+    std::unordered_map<
         std::string,
         zen::bones_framework_acceptor_shared
     >;
@@ -33,20 +34,15 @@ public:
 
     ~bones_framework_directory();
 
-    explicit bones_framework_directory(
-        std::string name_
-    );
+    explicit bones_framework_directory( std::string name_ );
 
-    using shared = types< bones_framework_directory >::shared;
+    using shared =
+    types< bones_framework_directory >::shared;
 
     template< typename ...Args >
     static bones_framework_directory::shared
     make( Args &&... args )
-    {
-        return std::make_shared< bones_framework_directory >(
-            std::forward< Args >( args )...
-        );
-    }
+    { return std::make_shared< bones_framework_directory >( std::forward< Args >( args )... ); }
 
     void
     insert(
@@ -55,14 +51,10 @@ public:
     );
 
     void
-    remove(
-        const std::string &name_
-    );
+    remove( const std::string &name_ );
 
     zen::bones_framework_acceptor_shared
-    lookup(
-        const std::string &name_
-    );
+    lookup( const std::string &name_ );
 
     void
     remove_all();

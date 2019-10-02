@@ -1,8 +1,8 @@
 #ifndef __ZEN__QUIX_NETWORK_SOCKET_LISTENING_HPP
 #define __ZEN__QUIX_NETWORK_SOCKET_LISTENING_HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_network.h>
 #include <utility>
 #include <stdexcept>
@@ -15,9 +15,9 @@
 #include <arpa/inet.h>
 #include <signal.h>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 class zen::quix_network_socket_listening
 {
@@ -44,13 +44,14 @@ public:
     accept();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 struct zen::quix_network_socket_listening< A >::impl
 {
-    using address_type = A;
+    using address_type =
+    A;
 
     int fd_mem{ 0 };
 
@@ -62,13 +63,11 @@ struct zen::quix_network_socket_listening< A >::impl
     accept();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
-zen::quix_network_socket_listening< A >::impl::impl(
-    const std::string &address_arg
-)
+zen::quix_network_socket_listening< A >::impl::impl( const std::string &address_arg )
 {
     unlink( address_arg.c_str());
     address_type address( address_arg );
@@ -107,19 +106,16 @@ zen::quix_network_socket_listening< A >::impl::impl(
     }
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
-zen::quix_network_socket_listening< A >::impl::~impl(
-)
-{
-    close( fd_mem );
-}
+zen::quix_network_socket_listening< A >::impl::~impl()
+{ close( fd_mem ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 int
 zen::quix_network_socket_listening< A >::impl::accept()
@@ -139,53 +135,40 @@ zen::quix_network_socket_listening< A >::impl::accept()
     return fd_new;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
-zen::quix_network_socket_listening< A >::quix_network_socket_listening(
-    const std::string &address_arg
-)
-    : pimpl(
-    new impl(
-        address_arg
-    ))
-{
-    return;
-}
+zen::quix_network_socket_listening< A >::quix_network_socket_listening( const std::string &address_arg )
+    : pimpl( new impl( address_arg ))
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 zen::quix_network_socket_listening< A >::~quix_network_socket_listening()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 int
 zen::quix_network_socket_listening< A >::accept()
-{
-    return pimpl->accept();
-}
+{ return pimpl->accept(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 std::string
-to_string(
-    const zen::quix_network_socket_listening< A > &quix_network_socket_listening_arg
-)
+to_string( const zen::quix_network_socket_listening< A > &quix_network_socket_listening_arg )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_NETWORK_SOCKET_LISTENING_HPP

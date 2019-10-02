@@ -16,17 +16,17 @@ struct build_operation_test_suite
         int argc_,
         char *argv_[]
     )
-    {
-    };
+    {};
 
     ~build_operation_test_suite()
-    {
-    };
+    {};
 
     int
     run()
     {
-        std::cout << "Running Operation Tests" << std::endl;
+        std::cout
+            << "Running Operation Tests"
+            << std::endl;
         return 0;
     }
 };

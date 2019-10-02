@@ -1,6 +1,6 @@
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/memory/quix_memory_mapped.hpp>
 #include <string>
 #include <stdexcept>
@@ -12,9 +12,9 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct zen::quix_memory_mapped::impl
 {
     void *data_mem{ nullptr };
@@ -30,9 +30,9 @@ struct zen::quix_memory_mapped::impl
     ~impl();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_memory_mapped::impl::impl(
     const std::string &filename_arg,
     const std::size_t base_arg,
@@ -48,7 +48,10 @@ zen::quix_memory_mapped::impl::impl(
             std::ios::binary
         );
 
-        for( int i = 0; i < size_arg; ++i )
+        for(
+            int i = 0;
+            i < size_arg;
+            ++i )
             transport_file.put( 0 );
     }
 
@@ -73,9 +76,9 @@ zen::quix_memory_mapped::impl::impl(
         throw std::runtime_error( "Failed to map file into memory" );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_memory_mapped::impl::~impl()
 {
     munmap(
@@ -84,9 +87,9 @@ zen::quix_memory_mapped::impl::~impl()
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_memory_mapped::quix_memory_mapped(
     const std::string &filename_arg,
     const std::size_t base_arg,
@@ -100,51 +103,37 @@ zen::quix_memory_mapped::quix_memory_mapped(
         size_arg,
         create_arg
     ))
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_memory_mapped::~quix_memory_mapped()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 void *
-zen::quix_memory_mapped::data(
-    const std::size_t offset_arg
-)
-{
-    return reinterpret_cast< uint8_t * >( pimpl->data_mem ) + offset_arg;
-}
+zen::quix_memory_mapped::data( const std::size_t offset_arg )
+{ return reinterpret_cast< uint8_t * >( pimpl->data_mem ) + offset_arg; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 std::size_t
-zen::quix_memory_mapped::size(
-    const std::size_t offset_arg
-)
-{
-    return pimpl->size_mem - offset_arg;
-}
+zen::quix_memory_mapped::size( const std::size_t offset_arg )
+{ return pimpl->size_mem - offset_arg; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 std::string
-to_string(
-    const zen::quix_memory_mapped &quix_memory_mapped_arg
-)
+to_string( const zen::quix_memory_mapped &quix_memory_mapped_arg )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///

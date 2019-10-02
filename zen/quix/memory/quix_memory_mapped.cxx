@@ -21,78 +21,61 @@ main(
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-
 #if 0
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/memory/quix_memory_mapped.cpp>
 #include <zen/quix/utility/testing.h>
 #include <string>
 #include <memory>
 #include <fstream>
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-constexpr int mb = 1024576;
-//
+///
+constexpr int mb =
+ 1024576;
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct plumbing
-{
-  plumbing()
-  {
-    structors_stack();
-    structors_heap();
-  }
+{ plumbing()
+  { structors_stack();
+    structors_heap();}
 
   void structors_stack()
-  {
-        std::string filename( "/tmp/mmfile1.dat" );
+  { std::string filename( "/tmp/mmfile1.dat" );
         std::ofstream( filename ).seekp( mb );
-        zen::quix_memory_mapped quix_memory_mapped1( filename, 0, 1048576 );
-  }
+        zen::quix_memory_mapped quix_memory_mapped1( filename, 0, 1048576 );}
 
   void structors_heap()
-  {
-        std::string filename( "/tmp/mmfile2.dat" );
+  { std::string filename( "/tmp/mmfile2.dat" );
         std::ofstream( filename ).seekp( mb );
-    auto quix_memory_mapped1 = std::make_quix_memory_shared< zen::quix_memory_mapped >( filename, 0, 1048576 );
-  }
-}
+    auto quix_memory_mapped1 =
+ std::make_quix_memory_shared< zen::quix_memory_mapped >( filename, 0, 1048576 );}}
 plumbing;
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct api
-{
-  api()
-  {
-    test();
-  }
+{ api()
+  { test();}
 
   void test()
-  {
-  }
-}
+  { }}
 api;
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct scenarios
-{
-  scenarios()
-  {
-    test();
-  }
+{ scenarios()
+  { test();}
 
   void test()
-  {
-  }
-}
+  { }}
 scenarios;
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif

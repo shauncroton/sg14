@@ -1,30 +1,36 @@
 #ifndef __ZEN__QUIX_TRANSPORT_SLOT__HPP
 #define __ZEN__QUIX_TRANSPORT_SLOT__HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_messaging.h>
 #include <stdexcept>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-template< typename T, bool C = true >
+///
+template<
+    typename T, bool C = true
+>
 class zen::quix_messaging_slot
 {
-    using transport_type = T;
-    using event_type = typename T::event_type;
+    using transport_type =
+    T;
+    using event_type =
+    typename T::event_type;
 
     transport_type &transport_mem;
     event_type &value_mem;
 
 public:
 
-    using commit_quix_messaging_slot = quix_messaging_slot<
+    using commit_quix_messaging_slot =
+    quix_messaging_slot<
         transport_type,
         true
     >;
-    using release_quix_messaging_slot = quix_messaging_slot<
+    using release_quix_messaging_slot =
+    quix_messaging_slot<
         transport_type,
         false
     >;
@@ -51,12 +57,11 @@ public:
 
     event_type *
     operator->();
-
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename T, bool C >
 zen::quix_messaging_slot<
     T,
@@ -67,13 +72,11 @@ zen::quix_messaging_slot<
 )
     : transport_mem( transport_arg )
     , value_mem( value_arg )
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename T, bool C >
 zen::quix_messaging_slot<
     T,
@@ -86,35 +89,31 @@ zen::quix_messaging_slot<
         transport_mem.release();
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename T, bool C >
 auto
 zen::quix_messaging_slot<
     T,
     C
 >::operator*() -> event_type &
-{
-    return value_mem;
-}
+{ return value_mem; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename T, bool C >
 auto
 zen::quix_messaging_slot<
     T,
     C
 >::operator->() -> event_type *
-{
-    return &value_mem;
-}
+{ return &value_mem; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename T >
 auto
 zen::make_quix_messaging_aquire_commit_slot( T &transport_arg )
@@ -126,9 +125,9 @@ zen::make_quix_messaging_aquire_commit_slot( T &transport_arg )
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename T >
 auto
 zen::make_quix_messaging_reaquire_commit_slot( T &transport_arg )
@@ -140,9 +139,9 @@ zen::make_quix_messaging_reaquire_commit_slot( T &transport_arg )
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename T >
 auto
 zen::make_quix_messaging_aquire_release_slot( T &transport_arg )
@@ -154,9 +153,9 @@ zen::make_quix_messaging_aquire_release_slot( T &transport_arg )
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename T >
 auto
 zen::make_quix_messaging_reaquire_release_slot( T &transport_arg )
@@ -168,9 +167,9 @@ zen::make_quix_messaging_reaquire_release_slot( T &transport_arg )
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename T, bool C >
 std::string
 to_string(
@@ -183,7 +182,7 @@ to_string(
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_TRANSPORT_SLOT__HPP

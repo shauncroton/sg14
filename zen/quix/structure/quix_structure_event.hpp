@@ -1,23 +1,24 @@
 #ifndef __ZEN__QUIX_STRUCTURE_EVENT__HPP
 #define __ZEN__QUIX_STRUCTURE_EVENT__HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_structure.h>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct zen::quix_structure_event
 {
-    using buffer_type = zen::quix_structure_buffer<
+    using buffer_type =
+    zen::quix_structure_buffer<
         char,
         4000
     >;
     buffer_type *buffer_mem;
     zen::quix_structure_message *message_mem;
 };
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_STRUCTURE_EVENT__HPP

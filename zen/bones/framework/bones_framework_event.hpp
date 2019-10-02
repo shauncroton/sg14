@@ -33,15 +33,11 @@ public:
 
     const std::string &
     tag() const
-    {
-        return _event_tag;
-    }
+    { return _event_tag; }
 
     const std::string &
     payload()
-    {
-        return _event_payload;
-    }
+    { return _event_payload; }
 
 private:
 

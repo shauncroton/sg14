@@ -1,11 +1,11 @@
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #ifndef __ZEN__QUIX_BEHAVIOUR_quix_behaviour_tcp_send__HPP
 #define __ZEN__QUIX_BEHAVIOUR_quix_behaviour_tcp_send__HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_behaviour.h>
 #include <zen/quix/network/quix_network_shared_socket.hpp>
 #include <zen/quix/structure/quix_structure_buffer.hpp>
@@ -20,9 +20,9 @@
 #include <arpa/inet.h>
 #include <string>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 class zen::quix_behaviour_tcp_send
 {
@@ -31,7 +31,8 @@ class zen::quix_behaviour_tcp_send
 
 public:
 
-    using event_type = E;
+    using event_type =
+    E;
 
     quix_behaviour_tcp_send( const std::string & );
 
@@ -54,13 +55,14 @@ public:
     post();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 struct zen::quix_behaviour_tcp_send< E >::impl
 {
-    using event_type = E;
+    using event_type =
+    E;
 
     zen::quix_network_shared_socket sender_mem;
 
@@ -73,99 +75,72 @@ struct zen::quix_behaviour_tcp_send< E >::impl
     post();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
-zen::quix_behaviour_tcp_send< E >::impl::impl(
-    const std::string &address_arg
-)
+zen::quix_behaviour_tcp_send< E >::impl::impl( const std::string &address_arg )
     : sender_mem( address_arg )
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 void
-zen::quix_behaviour_tcp_send< E >::impl::operator()(
-    event_type &event
-)
-{
-    //sender_mem.send( event.buffer_mem->data, event.buffer_mem->size );
-}
+zen::quix_behaviour_tcp_send< E >::impl::operator()( event_type &event )
+{ /*sender_mem.send( event.buffer_mem->data, event.buffer_mem->size );*/ }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
-bool
-zen::quix_behaviour_tcp_send< E >::impl::post()
-{
-    return true;
-}
+    bool
+    zen::quix_behaviour_tcp_send< E >::impl::post()
+    { return true; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
-zen::quix_behaviour_tcp_send< E >::quix_behaviour_tcp_send(
-    const std::string &address_arg
-)
-    : pimpl(
-    new impl(
-        address_arg
-    ))
-{
-    return;
-}
+    zen::quix_behaviour_tcp_send< E >::quix_behaviour_tcp_send(
+    const std::string &address_arg )
+    : pimpl( new impl( address_arg ))
+    {}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-template< typename E >
-zen::quix_behaviour_tcp_send< E >::~quix_behaviour_tcp_send()
-{
-    delete pimpl;
-}
+///
+template< typename E > zen::quix_behaviour_tcp_send< E >::~quix_behaviour_tcp_send()
+    { delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
-void
-zen::quix_behaviour_tcp_send< E >::operator()(
-    event_type &event
-)
-{
-    return pimpl->operator()( event );
-}
+    void
+    zen::quix_behaviour_tcp_send< E >::operator()( event_type &event )
+    { return pimpl->operator()( event ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
-bool
-zen::quix_behaviour_tcp_send< E >::post()
-{
-    return pimpl->post();
-}
+    bool
+    zen::quix_behaviour_tcp_send< E >::post()
+    { return pimpl->post(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
-std::string
-to_string(
-    const zen::quix_behaviour_tcp_send< E > &tcp_send_arg
-)
-{
-    throw std::runtime_error( "Unimplemented" );
-    return "";
-}
-//
+    std::string
+    to_string( const zen::quix_behaviour_tcp_send< E > &tcp_send_arg )
+    {
+        throw std::runtime_error( "Unimplemented" );
+        return "";
+    }
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_BEHAVIOUR_TCP_SEND__HPP

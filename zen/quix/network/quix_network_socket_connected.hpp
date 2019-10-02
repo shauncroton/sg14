@@ -1,8 +1,8 @@
 #ifndef __ZEN__QUIX_NETWORK_SOCKET_CONNECTED__HPP
 #define __ZEN__QUIX_NETWORK_SOCKET_CONNECTED__HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_network.h>
 #include <zen/quix/network/quix_network_socket_listening.hpp>
 #include <utility>
@@ -16,9 +16,9 @@
 #include <arpa/inet.h>
 #include <signal.h>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 class zen::quix_network_socket_connected
 {
@@ -79,13 +79,14 @@ public:
     );
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 struct zen::quix_network_socket_connected< A >::impl
 {
-    using address_type = A;
+    using address_type =
+    A;
 
     int fd_mem{ 0 };
 
@@ -131,25 +132,19 @@ struct zen::quix_network_socket_connected< A >::impl
     );
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
-zen::quix_network_socket_connected< A >::impl::impl(
-    const int fd_arg
-)
+zen::quix_network_socket_connected< A >::impl::impl( const int fd_arg )
     : fd_mem( fd_arg )
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
-zen::quix_network_socket_connected< A >::impl::impl(
-    const std::string &address_arg
-)
+zen::quix_network_socket_connected< A >::impl::impl( const std::string &address_arg )
 {
     address_type address( address_arg );
 
@@ -175,9 +170,9 @@ zen::quix_network_socket_connected< A >::impl::impl(
     }
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 std::size_t
 zen::quix_network_socket_connected< A >::impl::recv(
@@ -192,9 +187,9 @@ zen::quix_network_socket_connected< A >::impl::recv(
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 std::size_t
 zen::quix_network_socket_connected< A >::impl::send(
@@ -209,9 +204,9 @@ zen::quix_network_socket_connected< A >::impl::send(
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 std::size_t
 zen::quix_network_socket_connected< A >::impl::recv_fd(
@@ -275,9 +270,9 @@ zen::quix_network_socket_connected< A >::impl::recv_fd(
     return size_recvd;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 std::size_t
 zen::quix_network_socket_connected< A >::impl::send_fd(
@@ -324,14 +319,12 @@ zen::quix_network_socket_connected< A >::impl::send_fd(
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 int
-zen::quix_network_socket_connected< A >::impl::recv_fd_checked(
-    const uint64_t id_arg
-)
+zen::quix_network_socket_connected< A >::impl::recv_fd_checked( const uint64_t id_arg )
 {
     uint64_t id;
     int fd;
@@ -345,9 +338,9 @@ zen::quix_network_socket_connected< A >::impl::recv_fd_checked(
     throw std::runtime_error( "Invalid fd received" );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 void
 zen::quix_network_socket_connected< A >::impl::send_fd_checked(
@@ -362,58 +355,39 @@ zen::quix_network_socket_connected< A >::impl::send_fd_checked(
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
-zen::quix_network_socket_connected< A >::impl::~impl(
-)
-{
-    close( fd_mem );
-}
+zen::quix_network_socket_connected< A >::impl::~impl()
+{ close( fd_mem ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
-zen::quix_network_socket_connected< A >::quix_network_socket_connected(
-    const int fd_arg
-)
-    : pimpl(
-    new impl(
-        fd_arg
-    ))
-{
-    return;
-}
+zen::quix_network_socket_connected< A >::quix_network_socket_connected( const int fd_arg )
+    : pimpl( new impl( fd_arg ))
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
-zen::quix_network_socket_connected< A >::quix_network_socket_connected(
-    const std::string &address_arg
-)
-    : pimpl(
-    new impl(
-        address_arg
-    ))
-{
-    return;
-}
+zen::quix_network_socket_connected< A >::quix_network_socket_connected( const std::string &address_arg )
+    : pimpl( new impl( address_arg ))
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 zen::quix_network_socket_connected< A >::~quix_network_socket_connected()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 std::size_t
 zen::quix_network_socket_connected< A >::recv(
@@ -427,9 +401,9 @@ zen::quix_network_socket_connected< A >::recv(
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 std::size_t
 zen::quix_network_socket_connected< A >::send(
@@ -443,9 +417,9 @@ zen::quix_network_socket_connected< A >::send(
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 std::size_t
 zen::quix_network_socket_connected< A >::recv_fd(
@@ -461,9 +435,9 @@ zen::quix_network_socket_connected< A >::recv_fd(
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 std::size_t
 zen::quix_network_socket_connected< A >::send_fd(
@@ -479,21 +453,17 @@ zen::quix_network_socket_connected< A >::send_fd(
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 int
-zen::quix_network_socket_connected< A >::recv_fd_checked(
-    const uint64_t id_arg
-)
-{
-    return pimpl->recv_fd_checked( id_arg );
-}
+zen::quix_network_socket_connected< A >::recv_fd_checked( const uint64_t id_arg )
+{ return pimpl->recv_fd_checked( id_arg ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 void
 zen::quix_network_socket_connected< A >::send_fd_checked(
@@ -507,19 +477,17 @@ zen::quix_network_socket_connected< A >::send_fd_checked(
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename A >
 std::string
-to_string(
-    const zen::quix_network_socket_connected< A > &quix_network_socket_connected_arg
-)
+to_string( const zen::quix_network_socket_connected< A > &quix_network_socket_connected_arg )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_NETWORK_SOCKET_CONNECTED__HPP

@@ -13,11 +13,13 @@ namespace zen
 {
     class parts_data_journal;
 
-    using parts_data_journal_shared = types< parts_data_journal >::shared;
+    using parts_data_journal_shared =
+    types< parts_data_journal >::shared;
 
     class parts_data_tree;
 
-    using parts_data_tree_shared = types< parts_data_tree >::shared;
+    using parts_data_tree_shared =
+    types< parts_data_tree >::shared;
 }
 
 ///

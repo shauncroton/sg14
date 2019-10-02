@@ -13,7 +13,8 @@ namespace zen
 {
     class parts_logger_core;
 
-    using parts_logger_core_shared = types< parts_logger_core >::shared;
+    using parts_logger_core_shared =
+    types< parts_logger_core >::shared;
 }
 
 ///

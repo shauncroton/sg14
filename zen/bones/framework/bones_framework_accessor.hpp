@@ -28,7 +28,9 @@ class zen::bones_framework_accessor
     types< zen::bones_framework_accessor >::weak;
 
     using event_callback_function =
-    std::function< void( zen::bones_framework_event_shared & ) >;
+    std::function<
+        void( zen::bones_framework_event_shared & )
+    >;
 
     using callbacks_type =
     std::unordered_map<
@@ -81,14 +83,10 @@ public:
     );
 
     void
-    set_entangled(
-        zen::bones_framework_accessor_shared &entangled_
-    );
+    set_entangled( zen::bones_framework_accessor_shared &entangled_ );
 
     void
-    set_session_ownership(
-        zen::bones_framework_session_shared &session_instance_
-    );
+    set_session_ownership( zen::bones_framework_session_shared &session_instance_ );
 
     template<
         typename Session
@@ -96,26 +94,18 @@ public:
     void
     callback(
         const std::string &name_,
-        void (Session::*callback_function_)(
-            const zen::bones_framework_event_shared &event_
-        ),
+        void (Session::*callback_function_)( const zen::bones_framework_event_shared &event_ ),
         Session *callback_session_
     );
 
     void
-    uncallback(
-        const std::string &name_
-    );
+    uncallback( const std::string &name_ );
 
     void
-    deliver(
-        const zen::bones_framework_event_shared &event_
-    );
+    deliver( const zen::bones_framework_event_shared &event_ );
 
     void
-    dispatch(
-        const zen::bones_framework_event_shared &event_
-    );
+    dispatch( const zen::bones_framework_event_shared &event_ );
 
     void
     dispatch(
@@ -151,23 +141,15 @@ template<
 void
 zen::bones_framework_accessor::callback(
     const std::string &name_,
-    void (Session::*callback_function_)(
-        const zen::bones_framework_event_shared &event_
-    ),
+    void (Session::*callback_function_)( const zen::bones_framework_event_shared &event_ ),
     Session *callback_session_
 )
 {
     auto callback = [
         callback_session_,
         callback_function_
-    ](
-        zen::bones_framework_event_shared &event_
-    )
-    {
-        ( callback_session_->*callback_function_ )(
-            event_
-        );
-    };
+    ]( zen::bones_framework_event_shared &event_ )
+    { ( callback_session_->*callback_function_ )( event_ ); };
 
     _callbacks[ name_ ] = callback;
 }

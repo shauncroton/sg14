@@ -1,6 +1,6 @@
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/network/quix_network_shared_listener.hpp>
 #include <zen/quix/network/quix_network_socket_listening.hpp>
 #include <zen/quix/network/quix_network_socket_connected.hpp>
@@ -9,9 +9,9 @@
 #include <utility>
 #include <stdexcept>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct zen::quix_network_shared_listener::impl
 {
     quix_network_socket_listening< quix_network_address_inet > listening_inet;
@@ -25,9 +25,9 @@ struct zen::quix_network_shared_listener::impl
     );
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_network_shared_listener::impl::impl(
     const std::string &listening_inet_arg,
     const std::string &connected_quix_messaging_unix_receiver_arg,
@@ -36,13 +36,11 @@ zen::quix_network_shared_listener::impl::impl(
     : listening_inet( listening_inet_arg )
     , connected_quix_messaging_unix_receiver( connected_quix_messaging_unix_receiver_arg )
     , connected_quix_messaging_unix_sender( connected_quix_messaging_unix_sender_arg )
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_network_shared_listener::quix_network_shared_listener(
     const std::string &listening_inet_arg,
     const std::string &receiving_quix_messaging_unix_arg,
@@ -54,21 +52,17 @@ zen::quix_network_shared_listener::quix_network_shared_listener(
         receiving_quix_messaging_unix_arg,
         sending_quix_messaging_unix_arg
     ))
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_network_shared_listener::~quix_network_shared_listener()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 void
 zen::quix_network_shared_listener::operator()()
 {
@@ -83,17 +77,15 @@ zen::quix_network_shared_listener::operator()()
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 std::string
-to_string(
-    const zen::quix_network_shared_listener &quix_network_shared_listenerarg
-)
+to_string( const zen::quix_network_shared_listener &quix_network_shared_listenerarg )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///

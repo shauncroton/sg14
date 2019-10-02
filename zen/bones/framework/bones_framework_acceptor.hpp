@@ -22,10 +22,9 @@ class zen::bones_framework_acceptor
 {
 public: //SCTP
 
-    using session_factory_function = std::function<
-        zen::bones_framework_session_shared(
-            const zen::bones_framework_accessor_shared &
-        )
+    using session_factory_function    =
+    std::function<
+        zen::bones_framework_session_shared( const zen::bones_framework_accessor_shared & )
     >;
 
     bones_framework_acceptor( const bones_framework_acceptor & ) = delete;
@@ -56,9 +55,7 @@ public:
 
     const std::string &
     get_name() const
-    {
-        return _name;
-    }
+    { return _name; }
 
 private:
 

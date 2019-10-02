@@ -1,6 +1,6 @@
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/utility/quix_utility_configuration.hpp>
 #include <unordered_map>
 #include <utility>
@@ -10,9 +10,9 @@
 #include <algorithm>
 #include <functional>
 #include <cctype>
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 namespace
 {
     std::ifstream
@@ -35,15 +35,13 @@ namespace
         return stream;
     }
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 namespace
 {
     std::string &
-    ltrim(
-        std::string &s
-    )
+    ltrim( std::string &s )
     {
         s.erase(
             s.begin(),
@@ -51,39 +49,33 @@ namespace
                 s.begin(),
                 s.end(),
                 []( int c )
-                {
-                    return !std::isblank( c );
-                }
+                { return !std::isblank( c ); }
             ));
         return s;
     }
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 namespace
 {
     std::string &
-    rtrim(
-        std::string &s
-    )
+    rtrim( std::string &s )
     {
         s.erase(
             std::find_if(
                 s.rbegin(),
                 s.rend(),
                 []( int c )
-                {
-                    return !std::isblank( c );
-                }
+                { return !std::isblank( c ); }
             ).base(),
             s.end());
         return s;
     }
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct zen::quix_utility_configuration::impl
 {
     using dictionary_type =
@@ -95,9 +87,9 @@ struct zen::quix_utility_configuration::impl
     dictionary_type dictionary_mem;
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_utility_configuration::quix_utility_configuration(
     int argc_arg,
     char *argv_arg[]
@@ -107,20 +99,17 @@ zen::quix_utility_configuration::quix_utility_configuration(
         argc_arg,
         argv_arg
     ))
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-zen::quix_utility_configuration::quix_utility_configuration(
-    const std::string &string_arg
-)
+///
+zen::quix_utility_configuration::quix_utility_configuration( const std::string &string_arg )
     : pimpl( new impl )
 {
     std::stringstream stream;
-    stream << string_arg;
+    stream
+        << string_arg;
 
     std::string line;
     while( !getline(
@@ -145,12 +134,10 @@ zen::quix_utility_configuration::quix_utility_configuration(
     }
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-zen::quix_utility_configuration::quix_utility_configuration(
-    stream &&stream_arg
-)
+///
+zen::quix_utility_configuration::quix_utility_configuration( stream &&stream_arg )
     : pimpl( new impl )
 {
     std::string line;
@@ -176,38 +163,25 @@ zen::quix_utility_configuration::quix_utility_configuration(
     }
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-zen::quix_utility_configuration::quix_utility_configuration(
-    const quix_utility_configuration &other
-)
-    : pimpl(
-    new impl(
-        *other.pimpl
-    ))
-{
-    return;
-}
+///
+zen::quix_utility_configuration::quix_utility_configuration( const quix_utility_configuration &other )
+    : pimpl( new impl( *other.pimpl ))
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-zen::quix_utility_configuration::quix_utility_configuration(
-    quix_utility_configuration &&other
-)
+///
+zen::quix_utility_configuration::quix_utility_configuration( quix_utility_configuration &&other )
     : pimpl( other.pimpl )
-{
-    other.pimpl = nullptr;
-}
+{ other.pimpl = nullptr; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_utility_configuration &
-zen::quix_utility_configuration::operator=(
-    quix_utility_configuration other
-)
+zen::quix_utility_configuration::operator=( quix_utility_configuration other )
 {
     std::swap(
         pimpl,
@@ -216,13 +190,11 @@ zen::quix_utility_configuration::operator=(
     return *this;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_utility_configuration &
-zen::quix_utility_configuration::operator=(
-    quix_utility_configuration &&other
-)
+zen::quix_utility_configuration::operator=( quix_utility_configuration &&other )
 {
     std::swap(
         pimpl,
@@ -231,21 +203,17 @@ zen::quix_utility_configuration::operator=(
     return *this;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_utility_configuration::~quix_utility_configuration()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 const zen::quix_utility_configuration::value_type &
-zen::quix_utility_configuration::operator[](
-    const key_type &key
-)
+zen::quix_utility_configuration::operator[]( const key_type &key )
 {
     const auto it = pimpl->dictionary_mem.find( key );
     if( it != pimpl->dictionary_mem.cend())
@@ -257,43 +225,44 @@ zen::quix_utility_configuration::operator[](
     throw ( std::invalid_argument( what ));
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 auto
 zen::quix_utility_configuration::begin() const
-{
-    return pimpl->dictionary_mem.begin();
-}
+{ return pimpl->dictionary_mem.begin(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 auto
 zen::quix_utility_configuration::end() const
-{
-    return pimpl->dictionary_mem.end();
-}
+{ return pimpl->dictionary_mem.end(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 std::string
-to_string(
-    const zen::quix_utility_configuration &quix_utility_configuration_arg
-)
+to_string( const zen::quix_utility_configuration &quix_utility_configuration_arg )
 {
     std::stringstream ss;
-    ss << "{";
+    ss
+        << "{";
     for( auto pair : quix_utility_configuration_arg )
     {
         const auto &key = pair.first;
         const auto &value = pair.second;
-        ss << "{\"" << key << "\":\"" << value << "\"}";
+        ss
+            << "{\""
+            << key
+            << "\":\""
+            << value
+            << "\"}";
     }
-    ss << "}";
+    ss
+        << "}";
     return ss.str();
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///

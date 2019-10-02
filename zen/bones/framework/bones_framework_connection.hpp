@@ -33,7 +33,9 @@ public:
 
     ~bones_framework_connection();
 
-    template< typename bones_framework_dispatcher >
+    template<
+        typename bones_framework_dispatcher
+    >
     bones_framework_connection(
         std::string name_,
         zen::bones_framework_dispatcher_shared &dispatcher_
@@ -60,7 +62,11 @@ zen::bones_framework_connection::bones_framework_connection(
             _name
         ))
 {
-    std::cout << "bones_framework_connection " << _name << " is created" << std::endl;
+    std::cout
+        << "bones_framework_connection "
+        << _name
+        << " is created"
+        << std::endl;
 }
 
 
@@ -70,7 +76,11 @@ zen::bones_framework_connection::bones_framework_connection(
 inline
 zen::bones_framework_connection::~bones_framework_connection()
 {
-    std::cout << "bones_framework_connection " << _name << " is destroyed" << std::endl;
+    std::cout
+        << "bones_framework_connection "
+        << _name
+        << " is destroyed"
+        << std::endl;
 }
 
 ///

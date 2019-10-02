@@ -12,19 +12,41 @@
 ///
 class zen::parts_data_journal
 {
+    parts_data_journal( const parts_data_journal & ) = default;
+
+    parts_data_journal &
+    operator=( parts_data_journal & ) = default;
+
+    parts_data_journal( parts_data_journal && ) = default;
+
+    parts_data_journal &
+    operator=( parts_data_journal && ) = default;
+
+    ~parts_data_journal() = default;
+
+    explicit parts_data_journal( parts_data_journal *parent );
+
 public:
 
     struct data_buffer;
 
-    using name_type = std::string;
-    using data_type = data_buffer;
-    using node_type = zen::parts_data_journal;
+    using name_type =
+    std::string;
 
-    using name_to_node_dict_type = std::unordered_map<
+    using data_type =
+    data_buffer;
+
+    using node_type =
+    zen::parts_data_journal;
+
+    using name_to_node_dict_type =
+    std::unordered_map<
         name_type,
         node_type *
     >;
-    using name_to_data_dict_type = std::unordered_map<
+
+    using name_to_data_dict_type =
+    std::unordered_map<
         name_type,
         data_type *
     >;
@@ -42,20 +64,6 @@ public:
     );
 
 private:
-
-    parts_data_journal( const parts_data_journal & ) = default;
-
-    parts_data_journal &
-    operator=( parts_data_journal & ) = default;
-
-    parts_data_journal( parts_data_journal && ) = default;
-
-    parts_data_journal &
-    operator=( parts_data_journal && ) = default;
-
-    ~parts_data_journal() = default;
-
-    explicit parts_data_journal( parts_data_journal *parent );
 
     const char *
     get( const std::string &name_ ) const;
@@ -84,9 +92,11 @@ private:
     set_dirty() const;
 
     name_to_data_dict_type _name_to_data_dict;
+
     name_to_node_dict_type _name_to_node_dict;
 
     mutable long _hash;
+
     mutable bool _dirty{ true };
 
     node_type *_parent;

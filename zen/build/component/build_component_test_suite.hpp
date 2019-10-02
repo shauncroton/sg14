@@ -16,17 +16,17 @@ struct build_component_test_suite
         int argc_,
         char *argv_[]
     )
-    {
-    };
+    {};
 
     ~build_component_test_suite()
-    {
-    };
+    {};
 
     int
     run()
     {
-        std::cout << "Running Component Tests" << std::endl;
+        std::cout
+            << "Running Component Tests"
+            << std::endl;
         return 0;
     }
 };

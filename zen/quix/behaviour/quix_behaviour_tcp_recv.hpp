@@ -1,11 +1,11 @@
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #ifndef __ZEN__QUIX_BEHAVIOUR_TCP_RECV__HPP
 #define __ZEN__QUIX_BEHAVIOUR_TCP_RECV__HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_behaviour.h>
 #include <zen/quix/structure/quix_structure_event.hpp>
 #include <zen/quix/structure/quix_structure_buffer.hpp>
@@ -13,9 +13,9 @@
 #include <stdexcept>
 #include <string>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 class zen::quix_behaviour_tcp_recv
 {
@@ -24,7 +24,8 @@ class zen::quix_behaviour_tcp_recv
 
 public:
 
-    using event_type = E;
+    using event_type =
+    E;
 
     quix_behaviour_tcp_recv(
         void *,
@@ -50,17 +51,19 @@ public:
     post();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 struct zen::quix_behaviour_tcp_recv< E >::impl
 {
     static constexpr int pool_quix_messaging_slot_count{ 256 };
     static constexpr int pool_mask{ pool_quix_messaging_slot_count - 1 };
 
-    using event_type = E;
-    using buffer_type = typename event_type::buffer_type;
+    using event_type =
+    E;
+    using buffer_type =
+    typename event_type::buffer_type;
 
     struct data_type
     {
@@ -83,9 +86,9 @@ struct zen::quix_behaviour_tcp_recv< E >::impl
     post();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 zen::quix_behaviour_tcp_recv< E >::impl::impl(
     data_type *data_arg,
@@ -93,36 +96,34 @@ zen::quix_behaviour_tcp_recv< E >::impl::impl(
 )
     : data_mem( data_arg )
     , receiver_mem( address_arg )
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 void
-zen::quix_behaviour_tcp_recv< E >::impl::operator()(
-    event_type &event
-)
+zen::quix_behaviour_tcp_recv< E >::impl::operator()( event_type &event )
 {
     event.buffer_mem = &data_mem->buffer_pool[ ++data_mem->pool_quix_messaging_slot_cursor ];
-    //event.buffer_mem->size = receiver_mem.recv( event.buffer_mem->data, event.buffer_mem->reserved );
+    //event.buffer_mem->size =
+    //receiver_mem.recv(
+    //    event.buffer_mem->data,
+    //    event.buffer_mem->reserved
+    //);
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 bool
 zen::quix_behaviour_tcp_recv< E >::impl::post()
-{
-    return true;
-}
+{ return true; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 zen::quix_behaviour_tcp_recv< E >::quix_behaviour_tcp_recv(
     void *data_arg,
@@ -133,54 +134,42 @@ zen::quix_behaviour_tcp_recv< E >::quix_behaviour_tcp_recv(
         reinterpret_cast< typename impl::data_type * >( data_arg ),
         address_arg
     ))
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 zen::quix_behaviour_tcp_recv< E >::~quix_behaviour_tcp_recv()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 void
-zen::quix_behaviour_tcp_recv< E >::operator()(
-    event_type &event
-)
-{
-    return pimpl->operator()( event );
-}
+zen::quix_behaviour_tcp_recv< E >::operator()( event_type &event )
+{ return pimpl->operator()( event ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 bool
 zen::quix_behaviour_tcp_recv< E >::post()
-{
-    return pimpl->post();
-}
+{ return pimpl->post(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 std::string
-to_string(
-    const zen::quix_behaviour_tcp_recv< E > &quix_behaviour_tcp_recv_arg
-)
+to_string( const zen::quix_behaviour_tcp_recv< E > &quix_behaviour_tcp_recv_arg )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_BEHAVIOUR_TCP_RECV__HPP

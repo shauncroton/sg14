@@ -46,8 +46,7 @@ struct zen::parts_data_journal::data_buffer
     )
         : _old_buff( old_buff_ )
         , _buff( std::move( buff_ ))
-    {
-    };
+    {};
 };
 
 ///
@@ -65,9 +64,7 @@ zen::parts_data_journal::initialize()
 ///
 void
 zen::parts_data_journal::rollback( parts_data_journal &node_ )
-{
-    node_.rollback();
-}
+{ node_.rollback(); }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,18 +85,18 @@ zen::parts_data_journal::commit(
 
     const auto old_hash = node_._hash;
     node_.commit( ignore_dirty_ );
-    disk() << "{{" << old_hash << "}}\n";
+    disk()
+        << "{{"
+        << old_hash
+        << "}}\n";
 }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-zen::parts_data_journal::parts_data_journal(
-    parts_data_journal *parent
-)
+zen::parts_data_journal::parts_data_journal( parts_data_journal *parent )
     : _parent( parent )
-{
-}
+{}
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,12 +145,21 @@ zen::parts_data_journal::commit( bool ignore_dirty_ ) const
         if( data->_dirty )
         {
             data->_hash = disk().tellp();
-            disk() << "[[" << data->_buff.size() << "]]\n";
-            disk() << data->_buff << "\n";
+            disk()
+                << "[["
+                << data->_buff.size()
+                << "]]\n";
+            disk()
+                << data->_buff
+                << "\n";
             data->_dirty = false;
         }
 
-        ss << data->_hash << "=" << name << "\n";
+        ss
+            << data->_hash
+            << "="
+            << name
+            << "\n";
     }
 
     for( const auto &pair : _name_to_node_dict )
@@ -163,12 +169,21 @@ zen::parts_data_journal::commit( bool ignore_dirty_ ) const
 
         const auto hash = node->commit( ignore_dirty_ );
 
-        ss << hash << ":" << name << "\n";
+        ss
+            << hash
+            << ":"
+            << name
+            << "\n";
     }
 
     _hash = disk().tellp();
-    disk() << "[" << ss.str().size() << "]\n";
-    disk() << ss.str() << "\n";
+    disk()
+        << "["
+        << ss.str().size()
+        << "]\n";
+    disk()
+        << ss.str()
+        << "\n";
 
     _dirty = false;
     return _hash;
@@ -179,17 +194,13 @@ zen::parts_data_journal::commit( bool ignore_dirty_ ) const
 ///
 bool
 zen::parts_data_journal::set_dirty() const
-{
-    return !_dirty && ( _dirty = true ) && _parent->set_dirty();
-}
+{ return !_dirty && ( _dirty = true ) && _parent->set_dirty(); }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 const char *
-zen::parts_data_journal::get(
-    const std::string &name_
-) const
+zen::parts_data_journal::get( const std::string &name_ ) const
 {
     auto it = _name_to_data_dict.find( name_ );
     if( it == _name_to_data_dict.end())

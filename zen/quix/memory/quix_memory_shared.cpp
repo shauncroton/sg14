@@ -1,15 +1,15 @@
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/memory/quix_memory_shared.hpp>
 #include <stdexcept>
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct zen::quix_memory_shared::impl
 {
     void *data_mem{ nullptr };
@@ -24,16 +24,17 @@ struct zen::quix_memory_shared::impl
     ~impl();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_memory_shared::impl::impl(
     const std::size_t base_arg,
     const std::size_t size_arg
 )
     : size_mem( size_arg )
 {
-    shmid_mem = shmget(IPC_PRIVATE,
+    shmid_mem = shmget(
+        IPC_PRIVATE,
         size_arg,
         SHM_R | SHM_W
     );
@@ -49,9 +50,9 @@ zen::quix_memory_shared::impl::impl(
         throw std::runtime_error( "Failed to attach quix_memory_shared memory" );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_memory_shared::impl::~impl()
 {
     shmctl(
@@ -61,9 +62,9 @@ zen::quix_memory_shared::impl::~impl()
     );
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_memory_shared::quix_memory_shared(
     const std::size_t base_arg,
     const std::size_t size_arg
@@ -73,51 +74,37 @@ zen::quix_memory_shared::quix_memory_shared(
         base_arg,
         size_arg
     ))
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 zen::quix_memory_shared::~quix_memory_shared()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 void *
-zen::quix_memory_shared::data(
-    const std::size_t offset_arg
-)
-{
-    return reinterpret_cast< uint8_t * >( pimpl->data_mem ) + offset_arg;
-}
+zen::quix_memory_shared::data( const std::size_t offset_arg )
+{ return reinterpret_cast< uint8_t * >( pimpl->data_mem ) + offset_arg; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 std::size_t
-zen::quix_memory_shared::size(
-    const std::size_t offset_arg
-)
-{
-    return pimpl->size_mem - offset_arg;
-}
+zen::quix_memory_shared::size( const std::size_t offset_arg )
+{ return pimpl->size_mem - offset_arg; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 std::string
-to_string(
-    const zen::quix_memory_shared &quix_memory_shared_arg
-)
+to_string( const zen::quix_memory_shared &quix_memory_shared_arg )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///

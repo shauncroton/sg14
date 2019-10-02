@@ -1,12 +1,12 @@
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/network/quix_network_address_unix.hpp>
 #include <utility>
 #include <stdexcept>
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h> //sockaddr_in
@@ -14,12 +14,10 @@
 #include <arpa/inet.h>
 #include <signal.h>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-zen::quix_network_address_unix::quix_network_address_unix(
-    const std::string &address_arg
-)
+///
+zen::quix_network_address_unix::quix_network_address_unix( const std::string &address_arg )
 {
     bzero(
         &sockaddr_un_mem,
@@ -30,35 +28,29 @@ zen::quix_network_address_unix::quix_network_address_unix(
         address_arg.c_str());
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 const struct sockaddr *
 zen::quix_network_address_unix::addr()
-{
-    return ( struct sockaddr * ) &sockaddr_un_mem;
-}
+{ return ( struct sockaddr * ) &sockaddr_un_mem; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 std::size_t
 zen::quix_network_address_unix::size()
-{
-    return sizeof( sockaddr_un_mem );
-}
+{ return sizeof( sockaddr_un_mem ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 std::string
-to_string(
-    const zen::quix_network_address_unix &quix_network_address_unix_arg
-)
+to_string( const zen::quix_network_address_unix &quix_network_address_unix_arg )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///

@@ -32,33 +32,27 @@ public:
 
     parts_data_tree() = default;
 
-    explicit parts_data_tree(
-        const std::string &str
-    );
+    explicit parts_data_tree( const std::string &str );
 
     std::string
     str() const;
 
     void
     set( const std::string &value_ )
-    {
-        _value = value_;
-    }
+    { _value = value_; }
 
     const std::string &
     get() const
-    {
-        return _value;
-    }
+    { return _value; }
 
     const parts_data_tree &
     operator()( const std::string &key_ ) const
     {
         const auto it = this->find( key_ );
+
         if( it != this->end())
-        {
             return it->second;
-        }
+
         static parts_data_tree stub;
         return stub;
     }

@@ -1,8 +1,8 @@
 #ifndef __ZEN__QUIX_BEHAVIOUR_FILE_READ__HPP
 #define __ZEN__QUIX_BEHAVIOUR_FILE_READ__HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_behaviour.h>
 #include <zen/quix/structure/quix_structure_event.hpp>
 #include <zen/quix/structure/quix_structure_buffer.hpp>
@@ -10,9 +10,9 @@
 #include <stdexcept>
 #include <string>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 class zen::quix_behaviour_file_read
 {
@@ -21,7 +21,8 @@ class zen::quix_behaviour_file_read
 
 public:
 
-    using event_type = E;
+    using event_type =
+    E;
 
     quix_behaviour_file_read(
         void *,
@@ -46,23 +47,25 @@ public:
     bool
     post();
 };
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #define POOL_COUNT 256
 #define POOL_MASK  ( POOL_COUNT - 1 )
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 struct zen::quix_behaviour_file_read< E >::impl
 {
     static constexpr int pool_quix_messaging_slot_count{ 256 };
     static constexpr int pool_mask{ pool_quix_messaging_slot_count - 1 };
 
-    using event_type = E;
-    using buffer_type = typename event_type::buffer_type;
+    using event_type =
+    E;
+    using buffer_type =
+    typename event_type::buffer_type;
 
     struct data_type
     {
@@ -86,9 +89,9 @@ struct zen::quix_behaviour_file_read< E >::impl
     post();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 zen::quix_behaviour_file_read< E >::impl::impl(
     data_type *data_arg,
@@ -96,18 +99,14 @@ zen::quix_behaviour_file_read< E >::impl::impl(
 )
     : data_mem( data_arg )
     , file( filename_arg )
-{
-    file.exceptions( std::ifstream::badbit | std::ifstream::failbit );
-}
+{ file.exceptions( std::ifstream::badbit | std::ifstream::failbit ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 void
-zen::quix_behaviour_file_read< E >::impl::operator()(
-    event_type &event
-)
+zen::quix_behaviour_file_read< E >::impl::operator()( event_type &event )
 {
     event.buffer_mem = &data_mem->buffer_pool[ ++data_mem->pool_quix_messaging_slot_cursor ];
     file.getline(
@@ -119,19 +118,17 @@ zen::quix_behaviour_file_read< E >::impl::operator()(
         again_mem == false;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 bool
 zen::quix_behaviour_file_read< E >::impl::post()
-{
-    return again_mem;
-}
+{ return again_mem; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 zen::quix_behaviour_file_read< E >::quix_behaviour_file_read(
     void *data_arg,
@@ -142,54 +139,42 @@ zen::quix_behaviour_file_read< E >::quix_behaviour_file_read(
         reinterpret_cast< typename impl::data_type * >( data_arg ),
         filename_arg
     ))
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 zen::quix_behaviour_file_read< E >::~quix_behaviour_file_read()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 void
-zen::quix_behaviour_file_read< E >::operator()(
-    event_type &event
-)
-{
-    return pimpl->operator()( event );
-}
+zen::quix_behaviour_file_read< E >::operator()( event_type &event )
+{ return pimpl->operator()( event ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 bool
 zen::quix_behaviour_file_read< E >::post()
-{
-    return pimpl->post();
-}
+{ return pimpl->post(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 std::string
-to_string(
-    const zen::quix_behaviour_file_read< E > &quix_behaviour_file_read_arg
-)
+to_string( const zen::quix_behaviour_file_read< E > &quix_behaviour_file_read_arg )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_BEHAVIOUR_FILE_READ__HPP

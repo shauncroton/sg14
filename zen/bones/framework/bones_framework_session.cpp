@@ -22,7 +22,11 @@ zen::bones_framework_session::bones_framework_session(
     , _session_dispatcher( std::move( session_dispatcher_ ))
     , _session_accessor( std::move( session_accessor_ ))
 {
-    std::cout << "session " << _name << " is created" << std::endl;
+    std::cout
+        << "session "
+        << _name
+        << " is created"
+        << std::endl;
 }
 
 ///
@@ -30,7 +34,11 @@ zen::bones_framework_session::bones_framework_session(
 ///
 zen::bones_framework_session::~bones_framework_session()
 {
-    std::cout << "session " << _name << " is destroyed" << std::endl;
+    std::cout
+        << "session "
+        << _name
+        << " is destroyed"
+        << std::endl;
 }
 
 ///
@@ -38,18 +46,14 @@ zen::bones_framework_session::~bones_framework_session()
 ///
 zen::bones_framework_dispatcher_shared &
 zen::bones_framework_session::get_dispatcher()
-{
-    return _session_dispatcher;
-}
+{ return _session_dispatcher; }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 zen::bones_framework_accessor_shared
 zen::bones_framework_session::get_accessor()
-{
-    return _session_accessor.lock();
-}
+{ return _session_accessor.lock(); }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,16 +78,12 @@ zen::bones_framework_session::accessor_dispatch(
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 void
-zen::bones_framework_session::accessor_dispatch(
-    const zen::bones_framework_event_shared &event_
-)
+zen::bones_framework_session::accessor_dispatch( const zen::bones_framework_event_shared &event_ )
 {
     auto session_accessor = _session_accessor.lock();
     if( session_accessor )
     {
-        session_accessor->dispatch(
-            event_
-        );
+        session_accessor->dispatch( event_ );
     }
 }
 

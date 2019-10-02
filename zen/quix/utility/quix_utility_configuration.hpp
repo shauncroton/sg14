@@ -1,8 +1,8 @@
 #ifndef __ZEN__QUIX_UTILITY_CONFIGURATION__HPP
 #define __ZEN__QUIX_UTILITY_CONFIGURATION__HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_utility.h>
 #include <vector>
 #include <utility>
@@ -12,9 +12,9 @@
 #include <istream>
 #include <iostream>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 class zen::quix_utility_configuration
 {
     struct impl;
@@ -22,9 +22,12 @@ class zen::quix_utility_configuration
 
 public:
 
-    using key_type = std::string;
-    using value_type = std::string;
-    using stream = std::istream;
+    using key_type =
+    std::string;
+    using value_type =
+    std::string;
+    using stream =
+    std::istream;
 
     quix_utility_configuration(
         int,
@@ -61,86 +64,60 @@ public:
     end() const;
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename T >
 T
-zen::quix_utility_configuration::get(
-    const key_type &key_arg
-)
-{
-    return ( *this )[ key_arg ];
-}
+zen::quix_utility_configuration::get( const key_type &key_arg )
+{ return ( *this )[ key_arg ]; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template<>
 inline const char *
-zen::quix_utility_configuration::get< const char * >(
-    const key_type &key_arg
-)
-{
-    return ( *this )[ key_arg ].c_str();
-}
+zen::quix_utility_configuration::get< const char * >( const key_type &key_arg )
+{ return ( *this )[ key_arg ].c_str(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template<>
 inline int
-zen::quix_utility_configuration::get< int >(
-    const key_type &key_arg
-)
-{
-    return std::atoi(( *this )[ key_arg ].c_str());
-}
+zen::quix_utility_configuration::get< int >( const key_type &key_arg )
+{ return std::atoi(( *this )[ key_arg ].c_str()); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template<>
 inline unsigned int
-zen::quix_utility_configuration::get< unsigned int >(
-    const key_type &key_arg
-)
-{
-    return get< int >( key_arg );
-}
+zen::quix_utility_configuration::get< unsigned int >( const key_type &key_arg )
+{ return get< int >( key_arg ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template<>
 inline unsigned short
-zen::quix_utility_configuration::get< unsigned short >(
-    const key_type &key_arg
-)
-{
-    return get< int >( key_arg );
-}
+zen::quix_utility_configuration::get< unsigned short >( const key_type &key_arg )
+{ return get< int >( key_arg ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template<>
 inline std::size_t
-zen::quix_utility_configuration::get< std::size_t >(
-    const key_type &key_arg
-)
-{
-    return get< int >( key_arg );
-}
+zen::quix_utility_configuration::get< std::size_t >( const key_type &key_arg )
+{ return get< int >( key_arg ); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template<>
 inline std::vector< unsigned int >
-zen::quix_utility_configuration::get< std::vector< unsigned int > >(
-    const key_type &key_arg
-)
+zen::quix_utility_configuration::get< std::vector< unsigned int > >( const key_type &key_arg )
 {
     std::vector< unsigned int > vec;
     unsigned int v = 0;
@@ -156,7 +133,7 @@ zen::quix_utility_configuration::get< std::vector< unsigned int > >(
 
         if( d == ',' )
         {
-            //if( commit ) std::cout << "for " << key_arg << "=" << (*this)[ key_arg ] << " push_back( " << v << " )\n";
+            //if( commit ) std::cout << "for " << key_arg << "=" << ( *this )[ key_arg ] << " push_back( " << v << " )\n";
             if( commit )
                 vec.push_back( v );
             v = 0;
@@ -172,15 +149,15 @@ zen::quix_utility_configuration::get< std::vector< unsigned int > >(
         throw std::logic_error( "Invalid quix_utility_configuration file entry" );
     }
 
-    //if( commit ) std::cout << "for " << key_arg << "=" << (*this)[ key_arg ] << " push_back( " << v << " )\n";
+    //if( commit ) std::cout << "for " << key_arg << "=" << ( *this )[ key_arg ] << " push_back( " << v << " )\n";
     if( commit )
         vec.push_back( v );
     return vec;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template<>
 inline std::vector<
     std::pair<
@@ -195,9 +172,7 @@ zen::quix_utility_configuration::get<
             unsigned int
         >
     >
->(
-    const key_type &key_arg
-)
+>( const key_type &key_arg )
 {
     std::vector<
         std::pair<
@@ -228,7 +203,7 @@ zen::quix_utility_configuration::get<
         if( d == ',' && i )
         {
             i = !i;
-            //if( commit ) std::cout << "for " << key_arg << "=" << (*this)[ key_arg ] << " push_back( { " << v[0] << "," << v[1] << " } )\n";
+            //if( commit ) std::cout << "for " << key_arg << "=" << ( *this )[ key_arg ] << " push_back( { " << v[0] << ", " << v[1] << "} )\n";
             if( commit )
                 vec.push_back(
                     std::make_pair(
@@ -247,16 +222,21 @@ zen::quix_utility_configuration::get<
 
         throw std::logic_error( "Invalid quix_utility_configuration file entry" );
     }
-    //if( commit ) std::cout << "for " << key_arg << "=" << (*this)[ key_arg ] << " push_back( { " << v[0] << "," << v[1] << " } )\n";
+    //if( commit ) std::cout << "for " << key_arg << "=" << ( *this )[ key_arg ] << " push_back( { " << v[0] << ", " << v[1] << "} )\n";
     if( commit )
-        vec.push_back(
+        vec.
+
+            push_back(
             std::make_pair(
                 v[ 0 ],
                 v[ 1 ]
             ));
-    return vec;
+
+    return
+
+        vec;
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_UTILITY_CONFIGURATION__HPP

@@ -13,12 +13,10 @@
 struct build_system_test_case
 {
     build_system_test_case()
-    {
-    };
+    {};
 
     ~build_system_test_case()
-    {
-    };
+    {};
 };
 
 ///

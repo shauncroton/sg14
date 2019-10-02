@@ -1,14 +1,14 @@
 #ifndef __ZEN__QUIX_BEHAVIOUR_BASE__HPP
 #define __ZEN__QUIX_BEHAVIOUR_BASE__HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_behaviour.h>
 #include <stdexcept>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 class zen::quix_behaviour_base
 {
@@ -17,7 +17,8 @@ class zen::quix_behaviour_base
 
 public:
 
-    using event_type = E;
+    using event_type =
+    E;
 
     quix_behaviour_base( void * );
 
@@ -40,50 +41,42 @@ public:
     post();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 struct zen::quix_behaviour_base< E >::impl
 {
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
-zen::quix_behaviour_base< E >::quix_behaviour_base(
-    void *
-)
+zen::quix_behaviour_base< E >::quix_behaviour_base( void * )
     : pimpl( new impl )
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 zen::quix_behaviour_base< E >::~quix_behaviour_base()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 std::string
-to_string(
-    const zen::quix_behaviour_base< E > &quix_quix_behaviour_base_arg
-)
+to_string( const zen::quix_behaviour_base< E > &quix_quix_behaviour_base_arg )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_BEHAVIOUR_BASE__HPP
 
 #if 0
@@ -104,34 +97,28 @@ struct order;
 
 // Raw data buffer quix_structure
 typedef struct buffer
-{
-  size_t size;
-  char data[0];
-}
+{ size_t size;
+  char data[0];}
 buffer_t;
 char* buffer_to_string( buffer_t *buffer_ptr );
 
 
 // Event Structure
 typedef struct event
-{
-  int id;
+{ int id;
   int type;
   double price;
   double quanity;
   struct event *orig_ord_ptr;
-  struct order *order_ptr;
-}
+  struct order *order_ptr;}
 event_t;
 char* event_to_string( event_t *event_ptr );
 
 
 // Order struture
 typedef struct order
-{
-  int value;
-  struct event *event_ptr;
-}
+{ int value;
+  struct event *event_ptr;}
 order_t;
 char* order_to_string( order_t *order_ptr );
 

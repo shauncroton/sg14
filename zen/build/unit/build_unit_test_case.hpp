@@ -12,46 +12,34 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 class build_unit_test_case
-{
-    struct feature
-    {
-        const std::string text_;
+{ struct feature
+    { const std::string text_;
         const std::function< void() > callback_;
 
-        template<
-            typename T,
+        template< typename T,
             typename C
         >
-        feature(
-            T text_,
-            C callback_
-        )
+        feature( T text_,
+            C callback_)
             : _text( text_ )
             , _callback( callback_ )
-        {
-            return;
-        }
-    };
+        { return;}};
 
-    using feature_list_type = std::vector< feature >;
+    using feature_list_type =
+ std::vector< feature >;
 
 public:
 
-    build_unit_test_case(
-        std::string text_,
-        feature_list_type feature_list_
-    )
+    build_unit_test_case( std::string text_,
+        feature_list_type feature_list_)
         : _text( std::move( text_ ))
         , _features( std::move( features_ ))
-    {
-        return;
-    }
+    { return;}
 
 private:
 
     const std::string _text;
-    const feature_list_type _feature_list;
-};
+    const feature_list_type _feature_list;};
 #endif
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////

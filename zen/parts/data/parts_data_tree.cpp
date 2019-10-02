@@ -9,9 +9,7 @@
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-zen::parts_data_tree::parts_data_tree(
-    const std::string &str
-)
+zen::parts_data_tree::parts_data_tree( const std::string &str )
 {
     std::vector< parts_data_tree * > stack{ this };
     size_t index = 0;
@@ -20,11 +18,12 @@ zen::parts_data_tree::parts_data_tree(
     auto multi_line{ false };
 
     auto is_triple_quote = []( auto &it )
-    {
-        return ( *( it + 1 ) == '"' ) && ( *( it + 2 ) == '"' ) && ( *( it + 3 ) == '"' ) && ( *( it + 4 ) == '\n' );
-    };
+    { return ( *( it + 1 ) == '"' ) && ( *( it + 2 ) == '"' ) && ( *( it + 3 ) == '"' ) && ( *( it + 4 ) == '\n' ); };
 
-    for( auto it = str.begin(); it != str.end(); ++it )
+    for(
+        auto it = str.begin();
+        it != str.end();
+        ++it )
     {
         if( multi_line )
         {
@@ -111,11 +110,21 @@ namespace
 
             if( val.find_first_of( "=\n\t\0\"" ) == std::string::npos )
             {
-                oss << tabs << key << "=" << val << "\n";
+                oss
+                    << tabs
+                    << key
+                    << "="
+                    << val
+                    << "\n";
             }
             else
             {
-                oss << tabs << key << "=\"\"\"\n" << val << "\n\"\"\"\n";
+                oss
+                    << tabs
+                    << key
+                    << "=\"\"\"\n"
+                    << val
+                    << "\n\"\"\"\n";
             }
 
             serialize(
@@ -125,7 +134,6 @@ namespace
             );
         }
     };
-
 }
 
 ///

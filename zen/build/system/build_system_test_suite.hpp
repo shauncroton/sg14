@@ -16,17 +16,17 @@ struct build_system_test_suite
         int argc_,
         char *argv_[]
     )
-    {
-    };
+    {};
 
     ~build_system_test_suite()
-    {
-    };
+    {};
 
     int
     run()
     {
-        std::cout << "Running System Tests" << std::endl;
+        std::cout
+            << "Running System Tests"
+            << std::endl;
         return 0;
     }
 };

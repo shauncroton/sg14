@@ -29,13 +29,16 @@ zen::bones_framework_acceptor::bones_framework_acceptor(
             std::move( start_thread ));
         thread_started.get();
     }
-    std::cout << "acceptor " << _name << " is created" << std::endl;
+    std::cout
+        << "acceptor "
+        << _name
+        << " is created"
+        << std::endl;
 }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-
 zen::bones_framework_acceptor::~bones_framework_acceptor()
 {
     if( _sock_fd >= 0 )
@@ -44,7 +47,11 @@ zen::bones_framework_acceptor::~bones_framework_acceptor()
         _listener_thread.join();
     }
 
-    std::cout << "acceptor " << _name << " is destroyed" << std::endl;
+    std::cout
+        << "acceptor "
+        << _name
+        << " is destroyed"
+        << std::endl;
 }
 
 ///
@@ -67,9 +74,7 @@ zen::bones_framework_acceptor::grant(
     );
     first_accessor->set_entangled( second_accessor );
     second_accessor->set_entangled( first_accessor );
-    zen::bones_framework_session_shared session_instance = _factory_function(
-        second_accessor
-    );
+    zen::bones_framework_session_shared session_instance = _factory_function( second_accessor );
     second_accessor->set_session_ownership( session_instance );
     return first_accessor;
 }
@@ -84,7 +89,11 @@ zen::bones_framework_acceptor::listener(
     std::promise< void > start_thread
 )
 {
-    std::cout << "acceptor " << _name << " thread is starting...." << std::endl;
+    std::cout
+        << "acceptor "
+        << _name
+        << " thread is starting...."
+        << std::endl;
 
     auto it = address.find( ':' );
     auto host = address.substr(
@@ -101,7 +110,9 @@ zen::bones_framework_acceptor::listener(
     );
     if( _sock_fd < 0 )
     {
-        std::cout << "ERROR opening socket" << std::endl;
+        std::cout
+            << "ERROR opening socket"
+            << std::endl;
     }
 
     /// Bind address to socket
@@ -118,7 +129,9 @@ zen::bones_framework_acceptor::listener(
         sizeof( server_address ));
     if( r < 0 )
     {
-        std::cout << "ERROR on binding" << std::endl;
+        std::cout
+            << "ERROR on binding"
+            << std::endl;
     }
 
     /// Make a listening socket
@@ -133,23 +146,34 @@ zen::bones_framework_acceptor::listener(
     {
         struct sockaddr_in client_address;
         socklen_t client_length = sizeof( client_address );
-        std::cout << "acceptor " << _name << " thread is waiting...." << std::endl;
+        std::cout
+            << "acceptor "
+            << _name
+            << " thread is waiting...."
+            << std::endl;
         auto new_sock_fd = accept(
             _sock_fd,
             ( struct sockaddr * ) &client_address,
             &client_length
         );
-        std::cout << "acceptor " << _name << " thread is working...." << std::endl;
+        std::cout
+            << "acceptor "
+            << _name
+            << " thread is working...."
+            << std::endl;
         if( new_sock_fd < 0 )
         {
             break;
         }
 
-        //            uint32_t ready = 0xCAFEBABE;
+        //            uint32_t ready =
+        //0xCAFEBABE;
         //            send(new_sock_fd, &ready, sizeof(ready),0);
-        //            ready = 0;
+        //            ready =
+        //0;
         //            recv(new_sock_fd, &ready, sizeof(ready),0);
-        //            if( ready != 0xCAFEBABE ) throw std::runtime_error("connection handshake bad");
+        //            if( ready !=
+        //0xCAFEBABE ) throw std::runtime_error( "connection handshake bad" );
 
         auto first_accessor = grant(
             _service_dispatcher,
@@ -160,7 +184,11 @@ zen::bones_framework_acceptor::listener(
             new_sock_fd
         );
     }
-    std::cout << "acceptor " << _name << " thread is stopping...." << std::endl;
+    std::cout
+        << "acceptor "
+        << _name
+        << " thread is stopping...."
+        << std::endl;
 }
 
 ///

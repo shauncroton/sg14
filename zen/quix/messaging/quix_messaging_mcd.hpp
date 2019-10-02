@@ -1,8 +1,8 @@
 #ifndef __ZEN__QUIX_TRANSPORT_MCD__HPP
 #define __ZEN__QUIX_TRANSPORT_MCD__HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_messaging.h>
 #include <zen/quix/structure/quix_structure_cacheline.hpp>
 #include <stdexcept>
@@ -12,9 +12,9 @@
 #include <vector>
 #include <utility>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 class zen::quix_messaging_mcd
 {
@@ -28,15 +28,19 @@ class zen::quix_messaging_mcd
 
 public:
 
-    using node_id_type = unsigned int;
-    using injector_channel_type = unsigned int;
-    using follow_list_type = std::vector<
+    using node_id_type =
+    unsigned int;
+    using injector_channel_type =
+    unsigned int;
+    using follow_list_type =
+    std::vector<
         std::pair<
             unsigned int,
             unsigned int
         >
     >;
-    using event_type = E;
+    using event_type =
+    E;
 
     quix_messaging_mcd(
         void *,
@@ -81,11 +85,11 @@ public:
     void
     release();
 };
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 // OK if used in a multi process system where no process follows another on its own physical core
-//#define BARRIER  
+//#define BARRIER
 //
 // OK if used in a multi threaded system where no thread follows another in its own physical core
 #define BARRIER asm volatile("": : :"memory")
@@ -93,9 +97,9 @@ public:
 //
 // Needed when quix_nodes follow other quix_nodes that share physical cores
 //#define BARRIER __sync_synchronize() // probably stronger than needed
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 struct zen::quix_messaging_mcd< E >::impl
 {
@@ -105,16 +109,19 @@ struct zen::quix_messaging_mcd< E >::impl
     static constexpr int pool_quix_messaging_slot_count{ 256 };
     static constexpr int pool_mask{ pool_quix_messaging_slot_count - 1 };
 
-    using event_type = E;
+    using event_type =
+    E;
 
     struct data_type
     {
         zen::quix_structure_cacheline< data_type * > base_address;
 
-        using meta_type  = zen::quix_structure_cacheline< uint64_t >[max_quix_node_count][max_channel_count];
+        using meta_type  =
+        zen::quix_structure_cacheline< uint64_t >[max_quix_node_count][max_channel_count];
         meta_type meta_mem;
 
-        using pool_type = zen::quix_structure_cacheline< event_type >[max_channel_count][pool_quix_messaging_slot_count];
+        using pool_type =
+        zen::quix_structure_cacheline< event_type >[max_channel_count][pool_quix_messaging_slot_count];
         pool_type pool_mem;
     };
 
@@ -157,9 +164,9 @@ struct zen::quix_messaging_mcd< E >::impl
     release();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline
 zen::quix_messaging_mcd< E >::impl::impl(
@@ -173,7 +180,6 @@ zen::quix_messaging_mcd< E >::impl::impl(
     , quix_node_id_mem( quix_node_id_arg )
     , quix_node_injector_channel_mem( quix_node_injector_channel_arg )
 {
-
     if( data_arg->base_address.value == 0 )
         data_arg->base_address.value = data_arg;
 
@@ -228,7 +234,10 @@ zen::quix_messaging_mcd< E >::impl::impl(
         walker_ptr_mem,
         0,
         max_channel_count * sizeof( walker_ptr_mem[ 0 ] ));
-    for( int c = 0; c < max_channel_count; ++c )
+    for(
+        int c = 0;
+        c < max_channel_count;
+        ++c )
     {
         if( followed_ptr_mem[ c ][ 0 ] )
         {
@@ -243,9 +252,9 @@ zen::quix_messaging_mcd< E >::impl::impl(
     }
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline bool
 zen::quix_messaging_mcd< E >::impl::aquire_test()
@@ -260,7 +269,9 @@ zen::quix_messaging_mcd< E >::impl::aquire_test()
         internal_ptr_mem,
         sizeof( walker_ptr_mem[ 0 ] ) * walked_mem
     );
-    for( int channel = 0; channel < walked_mem; )
+    for(
+        int channel = 0;
+        channel < walked_mem; )
     {
         if(( cursor_mem[ channel ] + 1 & pool_mask ) == ( **walker_ptr_mem[ channel ] & pool_mask ))
             ++channel;
@@ -271,9 +282,9 @@ zen::quix_messaging_mcd< E >::impl::aquire_test()
     return false;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline E &
 zen::quix_messaging_mcd< E >::impl::aquire()
@@ -302,9 +313,9 @@ zen::quix_messaging_mcd< E >::impl::aquire()
     return pool_mem[ external_channel_mem[ quix_node_injector_channel_mem ]][ cursor_mem[ quix_node_injector_channel_mem ]].value;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline void
 zen::quix_messaging_mcd< E >::impl::commit()
@@ -317,9 +328,9 @@ zen::quix_messaging_mcd< E >::impl::commit()
     channel_mem = -1;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline bool
 zen::quix_messaging_mcd< E >::impl::reaquire_test()
@@ -334,7 +345,9 @@ zen::quix_messaging_mcd< E >::impl::reaquire_test()
         internal_ptr_mem,
         sizeof( walker_ptr_mem[ 0 ] ) * walked_mem
     );
-    for( int channel = 0; channel < walked_mem; )
+    for(
+        int channel = 0;
+        channel < walked_mem; )
     {
         if( cursor_mem[ channel ] == ( **walker_ptr_mem[ channel ] & pool_mask ))
             ++channel;
@@ -345,9 +358,9 @@ zen::quix_messaging_mcd< E >::impl::reaquire_test()
     return false;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline E &
 zen::quix_messaging_mcd< E >::impl::reaquire()
@@ -376,9 +389,9 @@ zen::quix_messaging_mcd< E >::impl::reaquire()
     return pool_mem[ external_channel_mem[ channel_mem ]][ cursor_mem[ channel_mem ]].value;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline void
 zen::quix_messaging_mcd< E >::impl::release()
@@ -391,9 +404,9 @@ zen::quix_messaging_mcd< E >::impl::release()
     channel_mem = -1;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline
 zen::quix_messaging_mcd< E >::quix_messaging_mcd(
@@ -408,13 +421,11 @@ zen::quix_messaging_mcd< E >::quix_messaging_mcd(
         injector_channel_type( -1 ),
         follow_list_arg
     ))
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline
 zen::quix_messaging_mcd< E >::quix_messaging_mcd(
@@ -430,93 +441,75 @@ zen::quix_messaging_mcd< E >::quix_messaging_mcd(
         quix_node_injector_channel_arg,
         follow_list_arg
     ))
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline
 zen::quix_messaging_mcd< E >::~quix_messaging_mcd()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline bool
 zen::quix_messaging_mcd< E >::aquire_test()
-{
-    return pimpl->aquire_test();
-}
+{ return pimpl->aquire_test(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline E &
 zen::quix_messaging_mcd< E >::aquire()
-{
-    return pimpl->aquire();
-}
+{ return pimpl->aquire(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline void
 zen::quix_messaging_mcd< E >::commit()
-{
-    return pimpl->commit();
-}
+{ return pimpl->commit(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline bool
 zen::quix_messaging_mcd< E >::reaquire_test()
-{
-    return pimpl->reaquire_test();
-}
+{ return pimpl->reaquire_test(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline E &
 zen::quix_messaging_mcd< E >::reaquire()
-{
-    return pimpl->reaquire();
-}
+{ return pimpl->reaquire(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline void
 zen::quix_messaging_mcd< E >::release()
-{
-    return pimpl->release();
-}
+{ return pimpl->release(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline std::string
-to_string(
-    const zen::quix_messaging_mcd< E > &quix_node_processor
-)
+to_string( const zen::quix_messaging_mcd< E > &quix_node_processor )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_TRANSPORT_MCD__HPP

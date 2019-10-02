@@ -36,14 +36,17 @@ zen::bones_framework_accessor::factory(
     );
     if( sock_fd < 0 )
     {
-        std::cout << "ERROR opening socket" << std::endl;
+        std::cout
+            << "ERROR opening socket"
+            << std::endl;
         exit( 0 );
     }
-    struct hostent *server = gethostbyname(
-        host_.c_str());
+    struct hostent *server = gethostbyname( host_.c_str());
     if( server == nullptr )
     {
-        std::cout << "ERROR, no such host" << std::endl;
+        std::cout
+            << "ERROR, no such host"
+            << std::endl;
         exit( 0 );
     }
     struct sockaddr_in serv_addr;
@@ -61,15 +64,20 @@ zen::bones_framework_accessor::factory(
         ( struct sockaddr * ) &serv_addr,
         sizeof( serv_addr )) < 0 )
     {
-        std::cout << "ERROR connecting" << std::endl;
+        std::cout
+            << "ERROR connecting"
+            << std::endl;
         exit( 0 );
     }
 
-    //    uint32_t ready = 0xCAFEBABE;
+    //    uint32_t ready =
+    //0xCAFEBABE;
     //    send(sock_fd, &ready, sizeof(ready),0);
-    //    ready = 0;
+    //    ready =
+    //0;
     //    recv(sock_fd, &ready, sizeof(ready),0);
-    //    if( ready != 0xCAFEBABE )
+    //    if( ready !=
+    //0xCAFEBABE )
     //        throw std::runtime_error("connection handshake bad");
 
     const std::string name = host_ + ":" + std::to_string( port_ );
@@ -95,7 +103,6 @@ zen::bones_framework_accessor::factory(
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-
 zen::bones_framework_accessor::bones_framework_accessor(
     zen::bones_framework_dispatcher_shared dispatcher_,
     std::string name_,
@@ -105,25 +112,26 @@ zen::bones_framework_accessor::bones_framework_accessor(
     , _service_dispatcher( std::move( dispatcher_ ))
     , _accessor_ownership( std::move( ownership_ ))
 {
-    std::cout << "zen::bones_framework_accessor " << _name << " is created" << std::endl;
+    std::cout
+        << "zen::bones_framework_accessor "
+        << _name
+        << " is created"
+        << std::endl;
 }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-
 zen::bones_framework_accessor::bones_framework_accessor(
     const zen::bones_framework_dispatcher_shared &dispatcher_,
     const std::string &name_
 )
     : zen::bones_framework_accessor(
-
     dispatcher_,
     name_,
     nullptr
 )
-{
-}
+{}
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,7 +141,11 @@ zen::bones_framework_accessor::~bones_framework_accessor()
     if( _sock_fd >= 0 )
         close( _sock_fd );
 
-    std::cout << "zen::bones_framework_accessor " << _name << " is destroyed" << std::endl;
+    std::cout
+        << "zen::bones_framework_accessor "
+        << _name
+        << " is destroyed"
+        << std::endl;
 }
 
 ///
@@ -157,32 +169,22 @@ zen::bones_framework_accessor::start_dispatcher(
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 void
-zen::bones_framework_accessor::set_entangled(
-    zen::bones_framework_accessor_shared &entangled_
-)
-{
-    _entangled = entangled_;
-}
+zen::bones_framework_accessor::set_entangled( zen::bones_framework_accessor_shared &entangled_ )
+{ _entangled = entangled_; }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 ///
 void
-zen::bones_framework_accessor::set_session_ownership(
-    zen::bones_framework_session_shared &session_instance_
-)
-{
-    _session_ownership = session_instance_;
-}
+zen::bones_framework_accessor::set_session_ownership( zen::bones_framework_session_shared &session_instance_ )
+{ _session_ownership = session_instance_; }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 void
-zen::bones_framework_accessor::uncallback(
-    const std::string &name_
-)
+zen::bones_framework_accessor::uncallback( const std::string &name_ )
 {
     const auto it = _callbacks.find( name_ );
 
@@ -196,19 +198,26 @@ zen::bones_framework_accessor::uncallback(
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 void
-zen::bones_framework_accessor::deliver(
-    const zen::bones_framework_event_shared &event_
-)
+zen::bones_framework_accessor::deliver( const zen::bones_framework_event_shared &event_ )
 {
     if( _sock_fd == -1 )
     {
         std::this_thread::yield();
-        std::cout << "        deliver: " << event_->tag() << ", payload: " << event_->payload() << " @ " << _service_dispatcher->get_name() << std::endl;
+        std::cout
+            << "        deliver: "
+            << event_->tag()
+            << ", payload: "
+            << event_->payload()
+            << " @ "
+            << _service_dispatcher->get_name()
+            << std::endl;
 
         auto it = _callbacks.find( event_->tag());
         if( it == _callbacks.end())
         {
-            std::cout << "no callbacks, event lost" << std::endl;
+            std::cout
+                << "no callbacks, event lost"
+                << std::endl;
             return;
         }
         _service_dispatcher->enqueue(
@@ -219,7 +228,14 @@ zen::bones_framework_accessor::deliver(
     else
     {
         std::this_thread::yield();
-        std::cout << "           send: " << event_->tag() << ", payload: " << event_->payload() << " @ " << _service_dispatcher->get_name() << std::endl;
+        std::cout
+            << "           send: "
+            << event_->tag()
+            << ", payload: "
+            << event_->payload()
+            << " @ "
+            << _service_dispatcher->get_name()
+            << std::endl;
 
         size_t header_size = event_->tag().size();
         send(
@@ -276,12 +292,21 @@ void
 zen::bones_framework_accessor::dispatch( const zen::bones_framework_event_shared &event_ )
 {
     std::this_thread::yield();
-    std::cout << "       dispatch: " << event_->tag() << ", payload: " << event_->payload() << " @ " << _service_dispatcher->get_name() << std::endl;
+    std::cout
+        << "       dispatch: "
+        << event_->tag()
+        << ", payload: "
+        << event_->payload()
+        << " @ "
+        << _service_dispatcher->get_name()
+        << std::endl;
 
     auto entangled_accessor = _entangled.lock();
     if( !entangled_accessor )
     {
-        std::cout << "entangled not available" << std::endl;
+        std::cout
+            << "entangled not available"
+            << std::endl;
         return;
     }
     entangled_accessor->deliver( event_ );
@@ -296,7 +321,11 @@ zen::bones_framework_accessor::dispatcher(
     int sock_fd_
 )
 {
-    std::cout << "zen::bones_framework_accessor " << _name << " thread is starting...." << std::endl;
+    std::cout
+        << "zen::bones_framework_accessor "
+        << _name
+        << " thread is starting...."
+        << std::endl;
     _sock_fd = sock_fd_;
     char *buffer = 0;
     size_t length = 0;
@@ -317,9 +346,12 @@ zen::bones_framework_accessor::dispatcher(
 
     ///
     while( true )
-    {
-        ///
-        std::cout << "zen::bones_framework_accessor " << _name << " thread is waiting...." << std::endl;
+    { ///
+        std::cout
+            << "zen::bones_framework_accessor "
+            << _name
+            << " thread is waiting...."
+            << std::endl;
         size_t header_size;
         if( recv(
             _sock_fd,
@@ -368,7 +400,11 @@ zen::bones_framework_accessor::dispatcher(
         }
 
         ///
-        std::cout << "zen::bones_framework_accessor " << _name << " thread is working...." << std::endl;
+        std::cout
+            << "zen::bones_framework_accessor "
+            << _name
+            << " thread is working...."
+            << std::endl;
         auto event_received = std::make_shared< zen::bones_framework_event >(
             tag,
             std::string(
@@ -377,13 +413,24 @@ zen::bones_framework_accessor::dispatcher(
             ));
 
         std::this_thread::yield();
-        std::cout << "           recv: " << event_received->tag() << ", payload: " << event_received->payload() << " @ " << _service_dispatcher->get_name() << std::endl;
+        std::cout
+            << "           recv: "
+            << event_received->tag()
+            << ", payload: "
+            << event_received->payload()
+            << " @ "
+            << _service_dispatcher->get_name()
+            << std::endl;
 
         keep_me_alive_->dispatch( event_received );
     }
 
     delete[] buffer;
-    std::cout << "zen::bones_framework_accessor " << _name << " thread is stopping...." << std::endl;
+    std::cout
+        << "zen::bones_framework_accessor "
+        << _name
+        << " thread is stopping...."
+        << std::endl;
 }
 
 ///

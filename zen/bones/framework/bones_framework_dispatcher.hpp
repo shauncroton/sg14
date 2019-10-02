@@ -40,9 +40,11 @@ protected:
 
 public:
 
-    using event_callback_function = std::function< void( zen::bones_framework_event_shared & ) >;
+    using event_callback_function =
+    std::function< void( zen::bones_framework_event_shared & ) >;
 
-    using queue_content = std::pair<
+    using queue_content =
+    std::pair<
         event_callback_function,
         zen::bones_framework_event_shared
     >;
@@ -56,11 +58,7 @@ public:
     >
     static zen::bones_framework_dispatcher_shared
     make( Args ...args )
-    {
-        return std::make_shared< impl< State > >(
-            std::forward< Args >( args )...
-        );
-    }
+    { return std::make_shared< impl< State > >( std::forward< Args >( args )... ); }
 
     void
     enqueue(
@@ -70,15 +68,11 @@ public:
 
     const std::string &
     get_name() const
-    {
-        return _name;
-    }
+    { return _name; }
 
     const zen::bones_framework_directory_shared &
     get_directory()
-    {
-        return _directory;
-    }
+    { return _directory; }
 
     template< typename Manager >
     static void
@@ -93,15 +87,12 @@ public:
 private:
 
     void
-    process_events(
-        std::promise< void > start_thread
-    );
+    process_events( std::promise< void > start_thread );
 
 private:
 
     const zen::bones_framework_directory_shared _directory;
     const std::string _name;
-
     std::mutex _processing_queue_mutex;
     std::condition_variable _processing_queue_condition_variable;
     std::queue< queue_content > _processing_queue;
@@ -134,9 +125,7 @@ zen::bones_framework_dispatcher::impl< State >::impl(
     bones_framework_dispatcher(
         std::move( name_ ),
         std::move( directory_ ))
-{
-    return;
-}
+{}
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,9 +143,7 @@ zen::bones_framework_dispatcher::start_service(
     auto factory_function = [
         factory_,
         derived_dispatcher_
-    ](
-        const zen::bones_framework_accessor_shared &service_accessor
-    ) -> zen::bones_framework_session_shared
+    ]( const zen::bones_framework_accessor_shared &service_accessor ) -> zen::bones_framework_session_shared
     {
         return factory_(
             derived_dispatcher_,

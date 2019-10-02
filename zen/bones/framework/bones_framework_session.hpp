@@ -86,9 +86,7 @@ template<
 void
 zen::bones_framework_session::accessor_callback(
     const std::string &name_,
-    void (Session::*callback_function_)(
-        const zen::bones_framework_event_shared &event_
-    ),
+    void (Session::*callback_function_)( const zen::bones_framework_event_shared &event_ ),
     Session *callback_session_
 )
 {

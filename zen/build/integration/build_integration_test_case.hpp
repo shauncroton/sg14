@@ -13,12 +13,10 @@
 struct build_integration_test_case
 {
     build_integration_test_case()
-    {
-    };
+    {};
 
     ~build_integration_test_case()
-    {
-    };
+    {};
 };
 
 ///

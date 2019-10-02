@@ -1,16 +1,16 @@
 #ifndef __ZEN__QUIX_TRANSPORT_DUAL__HPP
 #define __ZEN__QUIX_TRANSPORT_DUAL__HPP
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/quix_messaging.h>
 #include <zen/quix/structure/quix_structure_cacheline.hpp>
 #include <stdexcept>
 #include <vector>
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 class zen::quix_messaging_dual
 {
@@ -24,9 +24,12 @@ class zen::quix_messaging_dual
 
 public:
 
-    using node_id_type = unsigned int;
-    using follow_list_type = std::vector< unsigned int >;
-    using event_type = E;
+    using node_id_type =
+    unsigned int;
+    using follow_list_type =
+    std::vector< unsigned int >;
+    using event_type =
+    E;
 
     quix_messaging_dual(
         void *,
@@ -68,7 +71,7 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 //
 // OK if used in a multi process system where no process follows another on its own physical core
-//#define BARRIER  
+//#define BARRIER
 //
 // OK if used in a multi threaded system where no thread follows another in its own physical core
 #define BARRIER asm volatile("": : :"memory")
@@ -87,18 +90,23 @@ struct zen::quix_messaging_dual< E >::impl
     static constexpr int pool_quix_messaging_slot_count{ 256 };
     static constexpr int pool_mask{ pool_quix_messaging_slot_count - 1 };
 
-    using node_id_type = unsigned int;
-    using follow_list_type = std::vector< unsigned int >;
-    using event_type = E;
+    using node_id_type =
+    unsigned int;
+    using follow_list_type =
+    std::vector< unsigned int >;
+    using event_type =
+    E;
 
     struct data_type
     {
         zen::quix_structure_cacheline< data_type * > base_address;
 
-        using meta_type  = zen::quix_structure_cacheline< event_type * >[max_quix_node_count][2];
+        using meta_type  =
+        zen::quix_structure_cacheline< event_type * >[max_quix_node_count][2];
         meta_type meta_mem;
 
-        using pool_type = zen::quix_structure_cacheline< event_type >[pool_quix_messaging_slot_count];
+        using pool_type =
+        zen::quix_structure_cacheline< event_type >[pool_quix_messaging_slot_count];
         pool_type pool_mem;
     };
 
@@ -135,9 +143,9 @@ struct zen::quix_messaging_dual< E >::impl
     release();
 };
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline
 zen::quix_messaging_dual< E >::impl::impl(
@@ -163,9 +171,9 @@ zen::quix_messaging_dual< E >::impl::impl(
     consumed_value_ptr[ 1 ] = &meta_mem[ f ][ 1 ].value;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline bool
 zen::quix_messaging_dual< E >::impl::aquire_test()
@@ -178,9 +186,9 @@ zen::quix_messaging_dual< E >::impl::aquire_test()
         : true;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline E &
 zen::quix_messaging_dual< E >::impl::aquire()
@@ -193,9 +201,9 @@ zen::quix_messaging_dual< E >::impl::aquire()
     return *pending_value_ptr;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline void
 zen::quix_messaging_dual< E >::impl::commit()
@@ -210,9 +218,9 @@ zen::quix_messaging_dual< E >::impl::commit()
     tt = !tt;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline bool
 zen::quix_messaging_dual< E >::impl::reaquire_test()
@@ -225,9 +233,9 @@ zen::quix_messaging_dual< E >::impl::reaquire_test()
         : false;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline E &
 zen::quix_messaging_dual< E >::impl::reaquire()
@@ -241,9 +249,9 @@ zen::quix_messaging_dual< E >::impl::reaquire()
     return *pending_value_ptr;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline void
 zen::quix_messaging_dual< E >::impl::release()
@@ -255,9 +263,9 @@ zen::quix_messaging_dual< E >::impl::release()
     tt = !tt;
 }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline
 zen::quix_messaging_dual< E >::quix_messaging_dual(
@@ -271,93 +279,75 @@ zen::quix_messaging_dual< E >::quix_messaging_dual(
         quix_node_id_arg,
         follow_list_arg
     ))
-{
-    return;
-}
+{}
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline
 zen::quix_messaging_dual< E >::~quix_messaging_dual()
-{
-    delete pimpl;
-}
+{ delete pimpl; }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline bool
 zen::quix_messaging_dual< E >::aquire_test()
-{
-    return pimpl->aquire_test();
-}
+{ return pimpl->aquire_test(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline E &
 zen::quix_messaging_dual< E >::aquire()
-{
-    return pimpl->aquire();
-}
+{ return pimpl->aquire(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline void
 zen::quix_messaging_dual< E >::commit()
-{
-    return pimpl->commit();
-}
+{ return pimpl->commit(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline bool
 zen::quix_messaging_dual< E >::reaquire_test()
-{
-    return pimpl->reaquire_test();
-}
+{ return pimpl->reaquire_test(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline E &
 zen::quix_messaging_dual< E >::reaquire()
-{
-    return pimpl->reaquire();
-}
+{ return pimpl->reaquire(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline void
 zen::quix_messaging_dual< E >::release()
-{
-    return pimpl->release();
-}
+{ return pimpl->release(); }
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 template< typename E >
 inline std::string
-to_string(
-    const zen::quix_messaging_dual< E > &quix_node_processor
-)
+to_string( const zen::quix_messaging_dual< E > &quix_node_processor )
 {
     throw std::runtime_error( "Unimplemented" );
     return "";
 }
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #endif // __ZEN__QUIX_TRANSPORT_DUAL__HPP

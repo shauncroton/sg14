@@ -16,17 +16,17 @@ struct build_integration_test_suite
         int argc_,
         char *argv_[]
     )
-    {
-    };
+    {};
 
     ~build_integration_test_suite()
-    {
-    };
+    {};
 
     int
     run()
     {
-        std::cout << "Running Integration Tests" << std::endl;
+        std::cout
+            << "Running Integration Tests"
+            << std::endl;
         return 0;
     }
 };

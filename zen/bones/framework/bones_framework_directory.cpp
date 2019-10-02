@@ -7,22 +7,26 @@
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-
-zen::bones_framework_directory::bones_framework_directory(
-    std::string name_
-)
+zen::bones_framework_directory::bones_framework_directory( std::string name_ )
     : _name( std::move( name_ ))
 {
-    std::cout << "directory " << _name << " is created" << std::endl;
+    std::cout
+        << "directory "
+        << _name
+        << " is created"
+        << std::endl;
 }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-
 zen::bones_framework_directory::~bones_framework_directory()
 {
-    std::cout << "directory " << _name << " is destroyed" << std::endl;
+    std::cout
+        << "directory "
+        << _name
+        << " is destroyed"
+        << std::endl;
 }
 
 ///
@@ -42,9 +46,7 @@ zen::bones_framework_directory::insert(
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 void
-zen::bones_framework_directory::remove(
-    const std::string &name_
-)
+zen::bones_framework_directory::remove( const std::string &name_ )
 {
     std::lock_guard< std::mutex > g( _service_map_mutex );
     auto it = _service_map.find( name_ );
@@ -57,16 +59,12 @@ zen::bones_framework_directory::remove(
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 zen::bones_framework_acceptor_shared
-zen::bones_framework_directory::lookup(
-    const std::string &name_
-)
+zen::bones_framework_directory::lookup( const std::string &name_ )
 {
     std::lock_guard< std::mutex > g( _service_map_mutex );
     auto it = _service_map.find( name_ );
     if( it == _service_map.end())
-    {
         return zen::bones_framework_acceptor_shared();
-    }
     return it->second;
 }
 
@@ -85,9 +83,7 @@ zen::bones_framework_directory::remove_all()
 ///
 const std::string &
 zen::bones_framework_directory::get_name() const
-{
-    return _name;
-}
+{ return _name; }
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////

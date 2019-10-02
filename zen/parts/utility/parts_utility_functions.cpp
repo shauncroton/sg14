@@ -18,9 +18,7 @@ zen::ltrim( std::string &s_ )
             s_.begin(),
             s_.end(),
             []( int ch )
-            {
-                return !std::isspace( ch );
-            }
+            { return !std::isspace( ch ); }
         ));
 }
 
@@ -35,9 +33,7 @@ zen::rtrim( std::string &s_ )
             s_.rbegin(),
             s_.rend(),
             []( int ch )
-            {
-                return !std::isspace( ch );
-            }
+            { return !std::isspace( ch ); }
         ).base(),
         s_.end());
 }
@@ -180,10 +176,7 @@ namespace
             return 0;
         }
 
-        const auto port = std::stoi(
-            connection_string_.substr(
-                ++it_begin
-            ));
+        const auto port = std::stoi( connection_string_.substr( ++it_begin ));
 
         if( port != uint16_t( port ))
             throw std::runtime_error( "port out of range" );
@@ -195,23 +188,21 @@ namespace
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-zen::network_connection_string::network_connection_string(
-    const std::string &connection_string_
-)
+zen::network_connection_string::network_connection_string( const std::string &connection_string_ )
     : _user( get_user( connection_string_ ))
     , _host( get_host( connection_string_ ))
     , _port( get_port( connection_string_ ))
-{
-}
+{}
 
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-zen::registry_path_tokens::registry_path_tokens(
-    const std::string &registry_path_
-)
+zen::registry_path_tokens::registry_path_tokens( const std::string &registry_path_ )
 {
-    for( size_t begin_idx = 0, end_idx; begin_idx != std::string::npos; begin_idx = end_idx )
+    for(
+        size_t begin_idx = 0, end_idx;
+        begin_idx != std::string::npos;
+        begin_idx = end_idx )
     {
         end_idx = registry_path_.find(
             '/',

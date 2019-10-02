@@ -21,86 +21,64 @@ main(
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
-
 #if 0
 
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 #include <zen/quix/behaviour/quix_behaviour_base.cpp>
 #include <zen/quix/utility/testing.hpp>
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct plumbing
-{
-  plumbing()
-  {
-    structors_stack();
+{ plumbing()
+  { structors_stack();
     structors_heap();
     copy_constructor();
     move_constructor();
     copy_assignment();
-    move_assignment();
-  }
+    move_assignment();}
 
   void structors_stack()
-  {
-  }
+  { }
 
   void structors_heap()
-  {
-  }
+  { }
 
   void copy_constructor()
-  {
-  }
+  { }
 
   void move_constructor()
-  {
-  }
+  { }
 
   void copy_assignment()
-  {
-  }
+  { }
 
   void move_assignment()
-  {
-  }
-}
+  { }}
 plumbing;
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct api
-{
-  api()
-  {
-    test();
-  }
+{ api()
+  { test();}
 
   void test()
-  {
-  }
-}
+  { }}
 api;
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
+///
 struct scenarios
-{
-  scenarios()
-  {
-    test();
-  }
+{ scenarios()
+  { test();}
 
   void test()
-  {
-  }
-}
+  { }}
 scenarios;
-//
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-
+///
 #endif
