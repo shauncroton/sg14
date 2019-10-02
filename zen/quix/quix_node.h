@@ -1,0 +1,37 @@
+#ifndef __ZEN__QUIX_NODE__H
+#define __ZEN__QUIX_NODE__H
+
+///
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///
+#include <types.h>
+
+///
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///
+namespace zen
+{
+    template<
+        typename T,
+        typename B
+    >
+    class quix_node_injector;
+
+    template<
+        typename T,
+        typename B,
+        typename J
+    >
+    class quix_node_processor;
+
+    template<
+        typename T,
+        typename B
+    >
+    class quix_node_terminator;
+}
+
+///
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///
+#endif // __ZEN__QUIX_NODE__H
