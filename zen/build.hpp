@@ -1,0 +1,16 @@
+#ifndef __ZEN__BUILD__HPP
+#define __ZEN__BUILD__HPP
+
+///
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///
+#include <zen/build/build_component.hpp>
+#include <zen/build/build_integration.hpp>
+#include <zen/build/build_operation.hpp>
+#include <zen/build/build_system.hpp>
+#include <zen/build/build_unit.hpp>
+
+///
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///
+#endif // __ZEN__BUILD__HPP

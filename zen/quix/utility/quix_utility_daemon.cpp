@@ -1,0 +1,129 @@
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+#include <zen/quix/utility/quix_utility_daemon.hpp>
+//#include <zen/quix/node/quix_node.hpp>
+#include <string>
+#include <unordered_map>
+#include <utility>
+#include <stdexcept>
+#include <sstream>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+struct zen::quix_utility_daemon::impl
+{
+    impl();
+};
+
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+zen::quix_utility_daemon::impl::impl()
+{
+    return;
+}
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+#if 0
+zen::quix_utility_daemon::quix_utility_daemon(
+  zen::quix_node_quix_node& n
+  )
+  : pimpl( new impl() )
+{
+  pid_t pid = fork();
+  
+  if( pid < 0 )
+    throw std::runtime_error( "Failed to start quix_node" );
+
+  if( pid > 0 )
+    return;
+
+  setsid();
+  chdir("/");
+  umask(0);
+  n();
+  exit(0);
+}
+#endif
+
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+zen::quix_utility_daemon::quix_utility_daemon(
+    const quix_utility_daemon &other
+)
+    : pimpl( new impl( *other.pimpl ))
+{
+    return;
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+zen::quix_utility_daemon::quix_utility_daemon(
+    quix_utility_daemon &&other
+)
+    : pimpl( other.pimpl )
+{
+    other.pimpl = nullptr;
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+zen::quix_utility_daemon &
+zen::quix_utility_daemon::operator=(
+    quix_utility_daemon other
+)
+{
+    std::swap(
+        pimpl,
+        other.pimpl
+    );
+    return *this;
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+zen::quix_utility_daemon &
+zen::quix_utility_daemon::operator=(
+    quix_utility_daemon &&other
+)
+{
+    std::swap(
+        pimpl,
+        other.pimpl
+    );
+    return *this;
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+zen::quix_utility_daemon::~quix_utility_daemon()
+{
+    delete pimpl;
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+std::string
+to_string(
+    const zen::quix_utility_daemon &d
+)
+{
+    throw std::runtime_error( "Unimplemented" );
+    return "";
+}
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
