@@ -47,15 +47,15 @@ public:
         session_factory_function factory_
     );
 
+    const std::string&
+    name() const
+    { return _name; }
+
     zen::bones_framework_accessor_shared
     grant(
         zen::bones_framework_dispatcher_shared &dispatcher_,
         const std::string &name_
     );
-
-    const std::string &
-    get_name() const
-    { return _name; }
 
 private:
 

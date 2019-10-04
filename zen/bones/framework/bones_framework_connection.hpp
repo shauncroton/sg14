@@ -41,6 +41,10 @@ public:
         zen::bones_framework_dispatcher_shared &dispatcher_
     );
 
+    const std::string&
+    name() const
+    { return _name; }
+
 private:
 
     const std::string _name;

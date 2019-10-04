@@ -2,7 +2,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 #include <zen/bones/framework/bones_framework_dispatcher.hpp>
-#include <zen/bones/framework/bones_framework_event.hpp>
+#include <zen/bones/framework/bones_framework_acceptor.hpp>
 #include <thread>
 #include <chrono>
 
@@ -23,7 +23,7 @@ zen::bones_framework_dispatcher::bones_framework_dispatcher(
     auto thread_started = start_thread.get_future();
 
     _processing_thread = std::thread(
-        &zen::bones_framework_dispatcher::process_events,
+        &zen::bones_framework_dispatcher::process,
         this,
         std::move( start_thread ));
 
@@ -68,23 +68,15 @@ zen::bones_framework_dispatcher::~bones_framework_dispatcher()
 ///
 void
 zen::bones_framework_dispatcher::enqueue(
-    event_callback_function &event_callback_,
+    enqueued_callback_function &enqueued_callback_,
     const zen::bones_framework_event_shared &enqueued_event_
 )
 {
-    std::cout
-        << "        enqueue: "
-        << enqueued_event_->tag()
-        << ", payload: "
-        << enqueued_event_->payload()
-        << " @ "
-        << get_name()
-        << std::endl;
-
     {
         std::lock_guard< std::mutex > g( _processing_queue_mutex );
+
         _processing_queue.emplace(
-            event_callback_,
+            enqueued_callback_,
             enqueued_event_
         );
     }
@@ -98,7 +90,7 @@ zen::bones_framework_dispatcher::enqueue(
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 void
-zen::bones_framework_dispatcher::process_events( std::promise< void > start_thread )
+zen::bones_framework_dispatcher::process( std::promise< void > start_thread )
 {
     std::cout
         << "bones_framework_dispatcher "
@@ -107,17 +99,26 @@ zen::bones_framework_dispatcher::process_events( std::promise< void > start_thre
         << std::endl;
     start_thread.set_value();
     while( true )
-    { //std::cout << "bones_framework_dispatcher " << name << " thread is waiting...." << std::endl;
+    {
+        //std::cout << "bones_framework_dispatcher " << name << " thread is waiting...." << std::endl;
+
         std::unique_lock< std::mutex > lock( _processing_queue_mutex );
+
         if( _processing_queue.empty())
             _processing_queue_condition_variable.wait( lock );
+
         //std::cout << "bones_framework_dispatcher " << name << " thread is working...." << std::endl;
+
         if( _processing_queue.empty())
             continue;
-        auto event_callback = _processing_queue.front().first;
+
+        auto enqueued_callback_ = _processing_queue.front().first;
         auto enqueued_event = _processing_queue.front().second;
+
         _processing_queue.pop();
+
         lock.unlock();
+
         if( !enqueued_event )
             break;
 
@@ -130,8 +131,9 @@ zen::bones_framework_dispatcher::process_events( std::promise< void > start_thre
             << _name
             << std::endl;
 
-        event_callback( enqueued_event );
+        enqueued_callback_( enqueued_event );
     };
+
     std::cout
         << "bones_framework_dispatcher "
         << _name

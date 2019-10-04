@@ -36,13 +36,9 @@ public:
 
     explicit bones_framework_directory( std::string name_ );
 
-    using shared =
-    types< bones_framework_directory >::shared;
-
-    template< typename ...Args >
-    static bones_framework_directory::shared
-    make( Args &&... args )
-    { return std::make_shared< bones_framework_directory >( std::forward< Args >( args )... ); }
+    const std::string &
+    name() const
+    { return _name; }
 
     void
     insert(
@@ -57,10 +53,7 @@ public:
     lookup( const std::string &name_ );
 
     void
-    remove_all();
-
-    const std::string &
-    get_name() const;
+    clear();
 
 private:
 

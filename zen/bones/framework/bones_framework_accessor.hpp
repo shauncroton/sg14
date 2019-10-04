@@ -63,6 +63,10 @@ public:
         const std::string &name_
     );
 
+    const std::string&
+    name() const
+    { return _name; }
+
     static zen::bones_framework_accessor_shared
     factory(
         zen::bones_framework_dispatcher_shared dispatcher_,

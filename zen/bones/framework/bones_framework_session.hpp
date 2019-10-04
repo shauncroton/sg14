@@ -32,19 +32,25 @@ public:
         zen::bones_framework_accessor_shared session_accessor_
     );
 
+    const std::string &
+    name()
+    { return _name; }
+
     zen::bones_framework_dispatcher_shared &
-    get_dispatcher();
+    dispatcher()
+    { return _session_dispatcher; }
 
     zen::bones_framework_accessor_shared
-    get_accessor();
+    accessor()
+    { return _session_accessor.lock(); }
 
     void
     accessor_dispatch( const zen::bones_framework_event_shared &event_ );
 
     void
     accessor_dispatch(
-        const std::string tag_,
-        const std::string payload_
+        const std::string &tag_,
+        const std::string &payload_
     );
 
     template< typename Session >
@@ -55,20 +61,7 @@ public:
         Session *callback_session_
     );
 
-    const std::string &
-    get_name();
-
 public:
-
-    template<
-        typename Manager,
-        typename Session
-    >
-    static zen::bones_framework_session_shared
-    factory(
-        const std::shared_ptr< Manager > &session_dispatcher_,
-        const zen::bones_framework_accessor_shared &session_accessor_
-    );
 
 private:
 
@@ -99,25 +92,6 @@ zen::bones_framework_session::accessor_callback(
             callback_session_
         );
     }
-}
-
-///
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///
-template<
-    typename Manager,
-    typename Session
->
-zen::bones_framework_session_shared
-zen::bones_framework_session::factory(
-    const std::shared_ptr< Manager > &session_dispatcher_,
-    const zen::bones_framework_accessor_shared &session_accessor_
-)
-{
-    return std::make_shared< Session >(
-        session_dispatcher_,
-        session_accessor_
-    );
 }
 
 ///

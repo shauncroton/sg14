@@ -13,9 +13,10 @@ zen::bones_framework_service::bones_framework_service(
 )
     : _name( std::move( name_ ))
     , _dispatcher( std::move( dispatcher_ ))
-{ //zen::bones_framework_dispatcher::start_service( //    dispatcher_,
+{
+    //zen::bones_framework_service::start( //    dispatcher_,
     //    "framework_view",
-    //    zen::bones_framework_session::factory<M, S>
+    //    zen::bones_framework_service::factory<M, S>
     //);
 
     std::cout
@@ -31,7 +32,7 @@ zen::bones_framework_service::bones_framework_service(
 ///
 zen::bones_framework_service::~bones_framework_service()
 {
-    _dispatcher->get_directory()->remove( _name );
+    _dispatcher->directory()->remove( _name );
     std::cout
         << "service "
         << _name

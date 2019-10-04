@@ -13,7 +13,7 @@ zen::bones_framework_accessor::factory(
     const std::string &name_
 )
 {
-    return dispatcher_->get_directory()->lookup( name_ )->grant(
+    return dispatcher_->directory()->lookup( name_ )->grant(
         dispatcher_,
         name_
     );
@@ -209,7 +209,7 @@ zen::bones_framework_accessor::deliver( const zen::bones_framework_event_shared 
             << ", payload: "
             << event_->payload()
             << " @ "
-            << _service_dispatcher->get_name()
+            << _service_dispatcher->name()
             << std::endl;
 
         auto it = _callbacks.find( event_->tag());
@@ -234,7 +234,7 @@ zen::bones_framework_accessor::deliver( const zen::bones_framework_event_shared 
             << ", payload: "
             << event_->payload()
             << " @ "
-            << _service_dispatcher->get_name()
+            << _service_dispatcher->name()
             << std::endl;
 
         size_t header_size = event_->tag().size();
@@ -298,7 +298,7 @@ zen::bones_framework_accessor::dispatch( const zen::bones_framework_event_shared
         << ", payload: "
         << event_->payload()
         << " @ "
-        << _service_dispatcher->get_name()
+        << _service_dispatcher->name()
         << std::endl;
 
     auto entangled_accessor = _entangled.lock();
@@ -419,7 +419,7 @@ zen::bones_framework_accessor::dispatcher(
             << ", payload: "
             << event_received->payload()
             << " @ "
-            << _service_dispatcher->get_name()
+            << _service_dispatcher->name()
             << std::endl;
 
         keep_me_alive_->dispatch( event_received );

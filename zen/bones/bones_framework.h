@@ -16,6 +16,13 @@ namespace zen
     using bones_framework_dispatcher_shared =
     types< bones_framework_dispatcher >::shared;
 
+    template< typename State >
+    class bones_framework_provider;
+
+    template< typename State >
+    using bones_framework_provider_shared =
+    typename types< bones_framework_provider< State > >::shared;
+
     class bones_framework_service;
 
     using bones_framework_service_shared =
@@ -50,6 +57,13 @@ namespace zen
 
     using bones_framework_accessor_shared =
     types< bones_framework_accessor >::shared;
+
+    template<
+        typename Type,
+        typename ...Args
+    >
+    std::shared_ptr< Type >
+    make( Args ...args );
 }
 
 ///
